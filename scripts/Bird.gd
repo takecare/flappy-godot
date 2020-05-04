@@ -1,8 +1,9 @@
 extends RigidBody2D
 
-export (float) var GRAVITY_SCALE = 5
-export (float) var JUMP_Y_VELOCITY = -150
-const ANGULAR_VELOCITY = 1.5
+export(float) var GRAVITY_SCALE = 5
+export(float) var JUMP_Y_VELOCITY = -150
+export(float) var HORIZONTAL_VELOCITY = 50
+export(float) var ANGULAR_VELOCITY = 5
 
 # used for debugging:
 var customPositionWasSet = false
@@ -16,6 +17,7 @@ var resetToMaxDownwardsRotation = false
 
 func _ready():
   gravity_scale = GRAVITY_SCALE
+  linear_velocity = Vector2(HORIZONTAL_VELOCITY, linear_velocity.y)
 
 func isFalling():
   return linear_velocity.y > 0
@@ -26,7 +28,7 @@ func justStartedFalling():
 # warning-ignore:unused_argument
 func _physics_process(delta):
   if justStartedFalling():
-    angular_velocity = ANGULAR_VELOCITY
+    angular_velocity = ANGULAR_VELOCITY / 2
 
   if rotation_degrees < -MAX_ROTATION_DEG:
     resetToMaxUpwardsRotation = true

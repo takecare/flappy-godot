@@ -19,6 +19,7 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_group_": true
 }
+ANGULAR_VELOCITY = 5.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )

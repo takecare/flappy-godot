@@ -19,6 +19,10 @@ config/name="Flappy Bird"
 run/main_scene="res://stages/GameStage.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Utils="*res://scenes/Utils.tscn"
+
 [display]
 
 window/size/width=144

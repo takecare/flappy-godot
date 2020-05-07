@@ -6,10 +6,10 @@ export(NodePath) var playerPath = null
 var player
 
 func _ready() -> void:
-  var screensize = get_viewport().get_visible_rect().size
+  var screensize = Utils.get_size()
   offset.x = -screensize.x * HORIZONTAL_OFFSET
   if playerPath == null:
-    player = get_tree().get_root().get_child(0).get_node("Bird")
+    player = Utils.get_main_node().get_node("Bird")
   else:
     player = get_node(playerPath)
 

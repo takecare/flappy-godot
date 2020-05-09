@@ -6,22 +6,16 @@ export(NodePath) var containerPath = null
 export(NodePath) var cameraPath = null
 export(Resource) var groundScene = preload("res://scenes/Ground.tscn")
 
-var nextPosition: Vector2 = Vector2()
-var container: Node = null
+onready var container: Node = get_node(containerPath) if containerPath != null else get_node("Container")
+onready var camera: Camera2D = get_node(containerPath) if containerPath != null else Utils.get_main_node().get_node("Camera")
+
 var groundPool: Array = []
-var camera: Camera2D = null
+var nextPosition: Vector2 = Vector2()
+var lastMoved: int = NUM_OF_GROUND_INSTANCES - 1
 
 func _ready() -> void:
   position.y = Utils.get_screen_size().y
   nextPosition = position
-  if containerPath == null:
-    container = get_node("Container")
-  else:
-    container = get_node(containerPath)
-  if cameraPath == null:
-    camera = Utils.get_main_node().get_node("Camera")
-  else:
-    camera = get_node(cameraPath)
   for i in range(NUM_OF_GROUND_INSTANCES):
     groundPool.append(instantiateGroundAt(i))
 
@@ -35,8 +29,6 @@ func _process(_delta: float) -> void:
   if camera == null:
     return
   updateGroundInstances()
-
-var lastMoved = groundPool.size() - 1
 
 func updateGroundInstances() -> void:
   for i in range(0, groundPool.size()):

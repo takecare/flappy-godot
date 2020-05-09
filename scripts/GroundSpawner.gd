@@ -7,11 +7,11 @@ export(NodePath) var cameraPath = null
 export(Resource) var groundScene = preload("res://scenes/Ground.tscn")
 
 onready var container: Node = get_node(containerPath) if containerPath != null else get_node("Container")
-onready var camera: Camera2D = get_node(containerPath) if containerPath != null else Utils.get_main_node().get_node("Camera")
+onready var camera: Camera2D = get_node(containerPath) if containerPath != null else Utils.get_main_camera()
 
 var groundPool: Array = []
 var nextPosition: Vector2 = Vector2()
-var lastMoved: int = NUM_OF_GROUND_INSTANCES - 1
+var lastMoved: int = NUM_OF_GROUND_INSTANCES - 1 # assumes array size is NUM_OF_GROUND_INSTANCES
 
 func _ready() -> void:
   position.y = Utils.get_screen_size().y
@@ -26,7 +26,7 @@ func instantiateGroundAt(pos: int) -> Node2D:
   return newGround
 
 func _process(_delta: float) -> void:
-  if camera == null:
+  if camera == null: # enables us to run the GroundSpawner scene independently
     return
   updateGroundInstances()
 

@@ -1,6 +1,6 @@
 extends StaticBody2D
 
-class_name Ground
+class_name Ground, "res://sprites/ground_icon.png"
 
 # these do not work because "onready" runs when the node to which this script is
 # attached to is added to the scene tree.
@@ -8,7 +8,7 @@ class_name Ground
 # onready var sprite: Node2D = get_node("Sprite")
 
 func get_size() -> Node2D:
-    return get_node("Sprite").texture.get_size()
+  return get_node("Sprite").texture.get_size()
 
 func get_rightmost_point() -> Vector2:
-    return get_node("Rightmost").get_global_position()
+  return get_node("Rightmost").get_global_position()

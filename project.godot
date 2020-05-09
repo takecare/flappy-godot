@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "Ground",
 "language": "GDScript",
 "path": "res://scripts/Ground.gd"
+}, {
+"base": "Node2D",
+"class": "Pipes",
+"language": "GDScript",
+"path": "res://scripts/Pipes.gd"
 } ]
 _global_script_class_icons={
-"Ground": ""
+"Ground": "res://sprites/ground.png",
+"Pipes": "res://sprites/pipe_green_bottom.png"
 }
 
 [application]

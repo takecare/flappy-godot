@@ -21,3 +21,4 @@ script = ExtResource( 3 )
 
 [node name="PipeSpawner" parent="." instance=ExtResource( 5 )]
 position = Vector2( 150, 0 )
+initialPipes = 5

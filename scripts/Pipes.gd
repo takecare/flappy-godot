@@ -2,8 +2,6 @@ extends Node2D
 
 class_name Pipes, "res://sprites/pipe_icon.png"
 
-# onready var name = get_node()
-
 var top: Node setget ,get_top
 var bottom: Node setget ,get_bottom
 

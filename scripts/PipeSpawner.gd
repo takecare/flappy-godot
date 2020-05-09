@@ -8,22 +8,23 @@ onready var container: Node = get_node(containerPath) if containerPath != null e
 onready var camera: Camera2D = get_node(cameraPath) if cameraPath != null else Utils.get_main_camera()
 onready var yBaseline: int = Utils.get_screen_size().y / 2
 
+export(int) var initialPipes = 3
 export(int) var hMinDistance = 50
 export var hOffsetVariation = [0, 5, 10, 15, 20, 25, 30, 35, 40]
 export var vOffsetVariation = [0, 10, 20, -20, -10]
-export var openings = [40, 45, 50, 55]
+export var openings = [45, 50, 55, 60]
 
 func _ready() -> void:
-  moveToNextPosition()
-  spawnPipe()
-  moveToNextPosition()
-  spawnPipe()
-  moveToNextPosition()
-  spawnPipe()
+  for _i in range(initialPipes):
+    spawnNextPipe()
 
 func _process(_delta: float) -> void:
   #
   pass
+
+func spawnNextPipe():
+  moveToNextPosition()
+  spawnPipe()
 
 func spawnPipe() -> void:
   var newPipes = pipeScene.instance()

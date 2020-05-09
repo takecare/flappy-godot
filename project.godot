@@ -20,8 +20,8 @@ _global_script_classes=[ {
 "path": "res://scripts/Pipes.gd"
 } ]
 _global_script_class_icons={
-"Ground": "res://sprites/ground.png",
-"Pipes": "res://sprites/pipe_green_bottom.png"
+"Ground": "res://sprites/ground_icon.png",
+"Pipes": "res://sprites/pipe_icon.png"
 }
 
 [application]

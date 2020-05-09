@@ -27,8 +27,7 @@ func _ready() -> void:
 
 func instantiateGroundAt(pos: int) -> Node2D:
   var newGround = groundScene.instance()
-  var node = newGround.get_node("Sprite") # bad: tightly coupled to the ground scene's internals
-  newGround.position.x = node.texture.get_size().x * pos
+  newGround.position.x = newGround.get_size().x * pos
   container.add_child(newGround)
   return newGround
 

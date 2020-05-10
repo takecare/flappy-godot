@@ -19,15 +19,15 @@ func _ready() -> void:
   for _i in range(initialPipes):
     spawnNextPipe()
 
-func spawnNextPipe():
+func spawnNextPipe() -> void:
   moveToNextPosition()
   spawnPipe()
 
 func spawnPipe() -> void:
   var newPipes = pipeScene.instance()
   newPipes.init(position, camera)
-  newPipes.connect("pipeFreed", self, "spawnNextPipe")
   newPipes.set_opening(openings[randi() % openings.size()])
+  newPipes.connect("pipeFreed", self, "spawnNextPipe")
   container.add_child(newPipes)
   pass
 

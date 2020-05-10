@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "RigidBody2D",
+"class": "Bird",
+"language": "GDScript",
+"path": "res://scripts/Bird.gd"
+}, {
 "base": "StaticBody2D",
 "class": "Ground",
 "language": "GDScript",
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://scripts/Pipes.gd"
 } ]
 _global_script_class_icons={
+"Bird": "res://sprites/bird_orange_0.png",
 "Ground": "res://sprites/ground_icon.png",
 "Pipes": "res://sprites/pipe_icon.png"
 }

@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name GroundSpawner
+
 const NUM_OF_GROUND_INSTANCES = 3
 
 export(NodePath) var containerPath = null

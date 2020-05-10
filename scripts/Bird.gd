@@ -1,12 +1,12 @@
 extends RigidBody2D
 
+class_name Bird, "res://sprites/bird_orange_0.png"
+
 export(float) var GRAVITY_SCALE: float = 5
 export(float) var JUMP_Y_VELOCITY: float = -150
 export(float) var HORIZONTAL_VELOCITY: float = 50
 export(float) var ANGULAR_VELOCITY: float = 5
 export(NodePath) var animationPlayerPath = null
-
-class_name Bird, "res://sprites/bird_orange_0.png"
 
 enum State { FLYING, JUMPING, HIT }
 
@@ -35,16 +35,12 @@ func set_state(state: int):
     State.HIT:
       currentState = HitState.new(self)
 
-
-
-
+#
 class BirdState:
   # used for debugging:
   var customPositionWasSet: bool = false
   var customPosition: Vector2 = Vector2(0,0)
-
   var bird: Bird = null
-
 
   func _init(b: Bird = null, gravityScale: float = 0, linearVelocity: float = 0) -> void:
     bird = b
@@ -103,8 +99,7 @@ class BirdState:
     pass
 
 
-
-
+#
 class FlyingState extends BirdState: # should this be FallingState?
   # we're forced by gdscript to have a default value of null
   # -> what if we remove this ctor and just have the parent one?

@@ -4,14 +4,17 @@ export(float) var GRAVITY_SCALE: float = 5
 export(float) var JUMP_Y_VELOCITY: float = -150
 export(float) var HORIZONTAL_VELOCITY: float = 50
 export(float) var ANGULAR_VELOCITY: float = 5
+export(NodePath) var animationPlayerPath = null
 
 class_name Bird, "res://sprites/bird_orange_0.png"
 
-onready var currentState: BirdState = JumpingState.new(self, ANGULAR_VELOCITY, JUMP_Y_VELOCITY)
+enum State { FLYING, JUMPING, HIT }
+
+onready var animationPlayer: AnimationPlayer = get_node(animationPlayerPath) if animationPlayerPath != null else get_node("AnimationPlayer")
+onready var currentState: BirdState = FlyingState.new(self, HORIZONTAL_VELOCITY)
 
 func _ready() -> void:
-  gravity_scale = GRAVITY_SCALE
-  linear_velocity = Vector2(HORIZONTAL_VELOCITY, linear_velocity.y)
+  pass
 
 func _physics_process(delta: float):
   currentState.update(delta)
@@ -22,6 +25,17 @@ func _unhandled_input(event: InputEvent):
 func _integrate_forces(state):
   currentState.updateForces(state)
 
+func set_state(state: int):
+  currentState.exit()
+  match state:
+    State.FLYING:
+      currentState = FlyingState.new(self)
+    State.JUMPING:
+      currentState = JumpingState.new(self, GRAVITY_SCALE, ANGULAR_VELOCITY, JUMP_Y_VELOCITY)
+    State.HIT:
+      currentState = HitState.new(self)
+
+
 
 
 class BirdState:
@@ -30,8 +44,12 @@ class BirdState:
   var customPosition: Vector2 = Vector2(0,0)
 
   var bird: Bird = null
-  func _init(b: Bird) -> void:
+
+
+  func _init(b: Bird = null, gravityScale: float = 0, linearVelocity: float = 0) -> void:
     bird = b
+    bird.gravity_scale = gravityScale
+    bird.linear_velocity = Vector2(linearVelocity, bird.linear_velocity.y)
 
   func update(_delta: float) -> void:
     pass
@@ -81,6 +99,7 @@ class BirdState:
     return bird.linear_velocity.y > 0
 
   func exit() -> void:
+    bird.animationPlayer.stop()
     pass
 
 
@@ -89,7 +108,8 @@ class BirdState:
 class FlyingState extends BirdState: # should this be FallingState?
   # we're forced by gdscript to have a default value of null
   # -> what if we remove this ctor and just have the parent one?
-  func _init(bird: Bird = null).(bird) -> void:
+  func _init(bird, linearVelocity: float = 0).(bird, 0, linearVelocity) -> void:
+    bird.animationPlayer.play("Flying")
     pass
 
   func update(delta: float) -> void:
@@ -117,7 +137,13 @@ class JumpingState extends BirdState:
   var jumpVelocity: float
 
   # we cannot define the type of 'bird' otherwise we won't be able to instantiate this state
-  func _init(bird = null, angVel: float = 0, jumpVel: float = 0).(bird) -> void:
+  func _init(
+    bird = null,
+    gravityScale: float = 0,
+    linearVelocity: float = 0,
+    angVel: float = 0,
+    jumpVel: float = 0
+  ).(bird, gravityScale, linearVelocity) -> void:
     angularVelocity = angVel
     jumpVelocity = jumpVel
 
@@ -160,14 +186,15 @@ class JumpingState extends BirdState:
   func jump() -> void:
     bird.set_linear_velocity(Vector2(bird.get_linear_velocity().x, jumpVelocity))
     bird.angular_velocity = -angularVelocity
+    bird.animationPlayer.play("Flap")
 
   func exit() -> void:
     pass
 
 
 
-class HitState:
-  func _init() -> void:
+class HitState extends BirdState:
+  func _init(bird: Bird = null).(bird) -> void:
     pass
 
   func update(delta: float) -> void:
@@ -180,4 +207,5 @@ class HitState:
     pass
 
   func exit() -> void:
+    bird.animationPlayer.stop()
     pass

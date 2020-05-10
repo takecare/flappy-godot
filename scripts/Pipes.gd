@@ -29,6 +29,8 @@ func get_rightmost_point() -> Vector2:
   return get_node("Rightmost").global_position
 
 func _process(_delta: float) -> void:
+  if camera == null:
+    return
   if cameraIsPastPipes():
     queue_free()
     emit_signal("pipeFreed")

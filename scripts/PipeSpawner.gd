@@ -9,10 +9,10 @@ onready var camera: Camera2D = get_node(cameraPath) if cameraPath != null else U
 onready var yBaseline: int = Utils.get_screen_size().y / 2
 
 export(int) var initialPipes = 3
-export(int) var hMinDistance = 50
+export(int) var hMinDistance = 60
 export var hOffsetVariation = [0, 5, 10, 15, 20, 25, 30, 35, 40]
 export var vOffsetVariation = [0, 10, 20, -20, -10]
-export var openings = [45, 50, 55, 60]
+export var openings = [50, 55, 60, 65]
 
 func _ready() -> void:
   randomize()

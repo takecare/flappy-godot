@@ -7,9 +7,11 @@ export(float) var JUMP_Y_VELOCITY: float = -150
 export(float) var HORIZONTAL_VELOCITY: float = 50
 export(float) var ANGULAR_VELOCITY: float = 5
 export(NodePath) var animationPlayerPath = null
+export(NodePath) var animatedSpritePath = null
 
 enum State { FLYING, JUMPING, HIT }
 
+onready var animatedSprite: AnimationPlayer = get_node(animatedSpritePath) if animatedSpritePath != null else get_node("AnimatedSprite")
 onready var animationPlayer: AnimationPlayer = get_node(animationPlayerPath) if animationPlayerPath != null else get_node("AnimationPlayer")
 onready var currentState: BirdState = FlyingState.new(self, HORIZONTAL_VELOCITY)
 
@@ -35,7 +37,7 @@ func set_state(state: int):
     State.HIT:
       currentState = HitState.new(self)
 
-#
+# base state
 class BirdState:
   # used for debugging:
   var customPositionWasSet: bool = false
@@ -96,8 +98,7 @@ class BirdState:
 
   func exit() -> void:
     bird.animationPlayer.stop()
-    pass
-
+    bird.animatedSprite.position = Vector2(0, 0)
 
 #
 class FlyingState extends BirdState: # should this be FallingState?
@@ -118,8 +119,6 @@ class FlyingState extends BirdState: # should this be FallingState?
 
   func exit() -> void:
     pass
-
-
 
 class JumpingState extends BirdState:
   # these are used to control the bird's rotation
@@ -186,8 +185,7 @@ class JumpingState extends BirdState:
   func exit() -> void:
     pass
 
-
-
+# bird hits pipes/ground
 class HitState extends BirdState:
   func _init(bird: Bird = null).(bird) -> void:
     pass

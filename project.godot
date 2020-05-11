@@ -20,6 +20,16 @@ _global_script_classes=[ {
 "path": "res://scripts/Ground.gd"
 }, {
 "base": "Node2D",
+"class": "GroundSpawner",
+"language": "GDScript",
+"path": "res://scripts/GroundSpawner.gd"
+}, {
+"base": "Node2D",
+"class": "PipeSpawner",
+"language": "GDScript",
+"path": "res://scripts/PipeSpawner.gd"
+}, {
+"base": "Node2D",
 "class": "Pipes",
 "language": "GDScript",
 "path": "res://scripts/Pipes.gd"
@@ -27,6 +37,8 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Bird": "res://sprites/bird_orange_0.png",
 "Ground": "res://sprites/ground_icon.png",
+"GroundSpawner": "",
+"PipeSpawner": "",
 "Pipes": "res://sprites/pipe_icon.png"
 }
 

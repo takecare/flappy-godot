@@ -28,8 +28,17 @@ func _ready() -> void:
 func spawnNextPipe() -> void:
   currentState.spawnNextPipe()
 
+func set_current_state(state: int) -> void:
+  currentState.exit()
+  match state:
+    State.IDLE:
+      currentState = IdleState.new(pipeScene, self)
+    State.SPAWNING:
+      currentState = IdleState.new(pipeScene, self)
+    State.PLAYING:
+      currentState = IdleState.new(pipeScene, self)
 
-#
+# base state
 class PipeSpawnerState:
   var pipeScene: PackedScene
   var pipeSpawner: PipeSpawner
@@ -49,15 +58,17 @@ class PipeSpawnerState:
   func spawnPipe():
     pass
 
+  func exit():
+    pass
 
-#
+# no pipes are spawned
 class IdleState extends PipeSpawnerState:
   func _init(scene, spawner).(scene, spawner) -> void:
     pass
 
-
-# spawns all pipes at a constant 
+# spawns all pipes at a constant distance, position and with constant opening
 class SpawningState extends PipeSpawnerState:
+  const OPENING: float = 55.0
   var xDistance: float
   var yDistance: float
 
@@ -73,7 +84,7 @@ class SpawningState extends PipeSpawnerState:
   func spawnPipe() -> void:
     var newPipes = pipeScene.instance()
     newPipes.init(pipeSpawner.position, pipeSpawner.camera)
-    newPipes.set_opening(55)
+    newPipes.set_opening(OPENING)
     newPipes.connect("pipeFreed", self, "spawnNextPipe")
     pipeSpawner.container.add_child(newPipes)
 
@@ -81,8 +92,7 @@ class SpawningState extends PipeSpawnerState:
     pipeSpawner.position.x = pipeSpawner.position.x + xDistance
     pipeSpawner.position.y = yDistance
 
-
-#
+# spawns pipes randomly within the limits set
 class PlayingState extends PipeSpawnerState:
   var initialPipes: int
   var hMinDistance: float

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/Background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Bird.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://scenes/PipeSpawner.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sprites/instructions_1.png" type="Texture" id=6]
 [ext_resource path="res://sprites/instructions_0.png" type="Texture" id=7]
+[ext_resource path="res://scripts/StartButton.gd" type="Script" id=8]
 
 [sub_resource type="AnimatedTexture" id=1]
 flags = 4
@@ -35,13 +36,15 @@ initialPipes = 5
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="TextureButton" type="TextureButton" parent="HUD"]
+[node name="StartButton" type="TextureButton" parent="HUD"]
 margin_top = 64.0
 margin_right = 144.0
 margin_bottom = 256.0
+action_mode = 0
 texture_normal = SubResource( 1 )
 expand = true
 stretch_mode = 3
+script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

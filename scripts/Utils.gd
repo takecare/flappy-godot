@@ -14,4 +14,4 @@ func get_path_or_node(path, name) -> Node:
   return get_node(name) if not path else get_node(path)
 
 func get_main_camera() -> Camera2D:
-  return Utils.get_main_node().get_node("Camera")
+  return Utils.get_main_node().get_node("Camera") as Camera2D

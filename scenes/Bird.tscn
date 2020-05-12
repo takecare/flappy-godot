@@ -90,7 +90,6 @@ tracks/1/keys = {
 }
 
 [node name="Bird" type="RigidBody2D"]
-position = Vector2( 31, 33 )
 linear_damp = 0.0
 script = ExtResource( 4 )
 __meta__ = {

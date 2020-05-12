@@ -13,7 +13,7 @@ enum State { FLYING, JUMPING, HIT }
 
 onready var animatedSprite: AnimationPlayer = get_node(animatedSpritePath) if animatedSpritePath != null else get_node("AnimatedSprite")
 onready var animationPlayer: AnimationPlayer = get_node(animationPlayerPath) if animationPlayerPath != null else get_node("AnimationPlayer")
-onready var currentState: BirdState = FlyingState.new(self, HORIZONTAL_VELOCITY)
+onready var currentState: BirdState = JumpingState.new(self, GRAVITY_SCALE, HORIZONTAL_VELOCITY, ANGULAR_VELOCITY, JUMP_Y_VELOCITY)
 
 func _ready() -> void:
   pass
@@ -31,9 +31,9 @@ func set_state(state: int):
   currentState.exit()
   match state:
     State.FLYING:
-      currentState = FlyingState.new(self)
+      currentState = JumpingState.new(self, HORIZONTAL_VELOCITY)
     State.JUMPING:
-      currentState = JumpingState.new(self, GRAVITY_SCALE, ANGULAR_VELOCITY, JUMP_Y_VELOCITY)
+      currentState = JumpingState.new(self, GRAVITY_SCALE, HORIZONTAL_VELOCITY, ANGULAR_VELOCITY, JUMP_Y_VELOCITY)
     State.HIT:
       currentState = HitState.new(self)
 
@@ -99,14 +99,14 @@ class BirdState:
   func exit() -> void:
     bird.animationPlayer.stop()
     bird.animatedSprite.position = Vector2(0, 0)
+    pass
 
-#
+# bird is flying across the scene, no input expected
 class FlyingState extends BirdState: # should this be FallingState?
   # we're forced by gdscript to have a default value of null
   # -> what if we remove this ctor and just have the parent one?
   func _init(bird, linearVelocity: float = 0).(bird, 0, linearVelocity) -> void:
     bird.animationPlayer.play("Flying")
-    pass
 
   func update(delta: float) -> void:
     pass
@@ -120,6 +120,7 @@ class FlyingState extends BirdState: # should this be FallingState?
   func exit() -> void:
     pass
 
+# in-play state
 class JumpingState extends BirdState:
   # these are used to control the bird's rotation
   const MAX_ROTATION_DEG: int = 30
@@ -178,7 +179,10 @@ class JumpingState extends BirdState:
       jump()
 
   func jump() -> void:
-    bird.set_linear_velocity(Vector2(bird.get_linear_velocity().x, jumpVelocity))
+    print(jumpVelocity)
+    print(bird.linear_velocity)
+    bird.linear_velocity = (Vector2(bird.get_linear_velocity().x, jumpVelocity))
+    print(bird.linear_velocity)
     bird.angular_velocity = -angularVelocity
     bird.animationPlayer.play("Flap")
 

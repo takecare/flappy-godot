@@ -13,7 +13,7 @@ enum State { FLYING, JUMPING, HIT }
 
 onready var animatedSprite: AnimationPlayer = get_node(animatedSpritePath) if animatedSpritePath != null else get_node("AnimatedSprite")
 onready var animationPlayer: AnimationPlayer = get_node(animationPlayerPath) if animationPlayerPath != null else get_node("AnimationPlayer")
-onready var currentState: BirdState = JumpingState.new(self, GRAVITY_SCALE, HORIZONTAL_VELOCITY, ANGULAR_VELOCITY, JUMP_Y_VELOCITY)
+onready var currentState: BirdState = FlyingState.new(self, HORIZONTAL_VELOCITY) #JumpingState.new(self, GRAVITY_SCALE, HORIZONTAL_VELOCITY, ANGULAR_VELOCITY, JUMP_Y_VELOCITY)
 
 func _ready() -> void:
   pass
@@ -118,7 +118,7 @@ class FlyingState extends BirdState: # should this be FallingState?
     pass
 
   func exit() -> void:
-    pass
+    .exit()
 
 # in-play state
 class JumpingState extends BirdState:
@@ -179,15 +179,9 @@ class JumpingState extends BirdState:
       jump()
 
   func jump() -> void:
-    print(jumpVelocity)
-    print(bird.linear_velocity)
-    bird.linear_velocity = (Vector2(bird.get_linear_velocity().x, jumpVelocity))
-    print(bird.linear_velocity)
+    bird.linear_velocity = Vector2(bird.get_linear_velocity().x, jumpVelocity)
     bird.angular_velocity = -angularVelocity
     bird.animationPlayer.play("Flap")
-
-  func exit() -> void:
-    pass
 
 # bird hits pipes/ground
 class HitState extends BirdState:
@@ -204,5 +198,5 @@ class HitState extends BirdState:
     pass
 
   func exit() -> void:
-    bird.animationPlayer.stop()
+    .exit()
     pass

@@ -56,7 +56,7 @@ class PipeSpawnerState:
   func moveToNextPosition():
     print("parent")
     pass
-  
+
   func spawnPipe():
     print("parent")
     pass
@@ -88,10 +88,11 @@ class SpawningState extends PipeSpawnerState:
     var newPipes = pipeScene.instance()
     newPipes.init(pipeSpawner.position, pipeSpawner.camera)
     newPipes.set_opening(OPENING)
-    
-    # @RUI: issue is here. when we change the state, the pipes that are still
-    # in memory are connected to the state that is no longer current
-    newPipes.connect("pipeFreed", scene, "spawnNextPipe")
+
+    # @RUI: issue is here. when we change the state (e.g. from spawning to
+    # playing), the pipes that are still in memory (i.e. the ones that have been
+    # spawned are connected to the state that is no longer current)
+    newPipes.connect("pipeFreed", pipeScene, "spawnNextPipe")
 
     pipeSpawner.container.add_child(newPipes)
 
@@ -129,7 +130,7 @@ class PlayingState extends PipeSpawnerState:
     newPipes.connect("pipeFreed", self, "spawnNextPipe")
     pipeSpawner.container.add_child(newPipes)
     pass
-  
+
   func moveToNextPosition() -> void:
     var hVariation = hOffsetVariation[randi() % hOffsetVariation.size()]
     var yVariation = vOffsetVariation[randi() % vOffsetVariation.size()]

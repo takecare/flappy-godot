@@ -6,9 +6,9 @@ export(NodePath) var cameraPath = null
 export(NodePath) var containerPath = null
 export(Resource) var pipeScene = preload("res://scenes/Pipes.tscn")
 
-export(int) var initialPipes = 3
-export(int) var hMinDistance = 60
-export var hOffsetVariation = [0, 5, 10, 15, 20, 25, 30, 35, 40]
+export(int) var initialPipes = 2
+export(int) var hMinDistance = 70
+export var hOffsetVariation = [10, 15, 20, 25, 30, 35]
 export var vOffsetVariation = [0, 10, 20, -20, -10]
 export var openings = [50, 55, 60, 65]
 
@@ -85,16 +85,7 @@ class SpawningState extends PipeSpawnerState:
     var newPipes = pipeScene.instance()
     newPipes.init(pipeSpawner.position, pipeSpawner.camera)
     newPipes.set_opening(OPENING)
-
-    # issue is here. when we change the state (e.g. from spawning to playing),
-    # the pipes that are still in memory (i.e. the ones that have been spawned)
-    # are connected to _this_ state (i.e. "spawning) that is no longer. this
-    # means that when a pipe is freed the signal is delivered to a state that is
-    # no longer active/no longer exists. one way to solve this is to add an
-    # intermediate layer to which all signals are connected and to which all
-    # states are connected too
-    newPipes.connect("pipeFreed", self, "spawnNextPipe")
-
+    newPipes.connect("pipeFreed", pipeSpawner, "spawnNextPipe")
     pipeSpawner.container.add_child(newPipes)
 
   func moveToNextPosition() -> void:
@@ -128,7 +119,7 @@ class PlayingState extends PipeSpawnerState:
     var newPipes = pipeScene.instance()
     newPipes.init(pipeSpawner.position, pipeSpawner.camera)
     newPipes.set_opening(openings[randi() % openings.size()])
-    newPipes.connect("pipeFreed", self, "spawnNextPipe")
+    newPipes.connect("pipeFreed", pipeSpawner, "spawnNextPipe")
     pipeSpawner.container.add_child(newPipes)
     pass
 

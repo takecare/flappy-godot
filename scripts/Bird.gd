@@ -108,16 +108,7 @@ class FlyingState extends BirdState: # should this be FallingState?
   func _init(bird, linearVelocity: float = 0).(bird, 0, linearVelocity) -> void:
     bird.animationPlayer.play("Flying")
 
-  func update(delta: float) -> void:
-    pass
-
-  func updateForces(state: Physics2DDirectBodyState) -> void:
-    pass
-
-  func handleInput(event: InputEvent) -> void:
-    pass
-
-  func exit() -> void:
+  func exit() -> void: 
     .exit()
 
 # in-play state

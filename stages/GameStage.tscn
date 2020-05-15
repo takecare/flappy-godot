@@ -44,7 +44,6 @@ initialPipes = 5
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="StartButton" type="TextureButton" parent="HUD"]
-margin_top = 64.0
 margin_right = 144.0
 margin_bottom = 256.0
 action_mode = 0

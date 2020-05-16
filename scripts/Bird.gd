@@ -2,6 +2,9 @@ extends RigidBody2D
 
 class_name Bird, "res://sprites/bird_orange_0.png"
 
+enum State { FLYING, JUMPING, HIT }
+signal bird_state_changed
+
 export(float) var GRAVITY_SCALE: float = 5
 export(float) var JUMP_Y_VELOCITY: float = -150
 export(float) var HORIZONTAL_VELOCITY: float = 50
@@ -9,13 +12,14 @@ export(float) var ANGULAR_VELOCITY: float = 5
 export(NodePath) var animationPlayerPath = null
 export(NodePath) var animatedSpritePath = null
 
-enum State { FLYING, JUMPING, HIT }
-
 onready var animatedSprite: AnimationPlayer = get_node(animatedSpritePath) if animatedSpritePath != null else get_node("AnimatedSprite")
 onready var animationPlayer: AnimationPlayer = get_node(animationPlayerPath) if animationPlayerPath != null else get_node("AnimationPlayer")
 onready var currentState: BirdState = FlyingState.new(self, HORIZONTAL_VELOCITY) #JumpingState.new(self, GRAVITY_SCALE, HORIZONTAL_VELOCITY, ANGULAR_VELOCITY, JUMP_Y_VELOCITY)
 
 func _ready() -> void:
+  var _result = connect("body_entered", self, "_on_body_entered")
+  contact_monitor = true
+  contacts_reported = 1
   pass
 
 func _physics_process(delta: float):
@@ -36,6 +40,11 @@ func set_state(state: int):
       currentState = JumpingState.new(self, GRAVITY_SCALE, HORIZONTAL_VELOCITY, ANGULAR_VELOCITY, JUMP_Y_VELOCITY)
     State.HIT:
       currentState = HitState.new(self)
+  emit_signal("bird_state_changed", state)
+
+func _on_body_entered(body: Node):
+  print("body entered")
+  currentState._on_body_entered(body)
 
 # base state
 class BirdState:
@@ -96,7 +105,11 @@ class BirdState:
   func isFalling() -> bool:
     return bird.linear_velocity.y > 0
 
+  func _on_body_entered(body):
+    pass
+
   func exit() -> void:
+    print("base bird exit")
     bird.animationPlayer.stop()
     bird.animatedSprite.position = Vector2(0, 0)
     pass
@@ -108,7 +121,7 @@ class FlyingState extends BirdState: # should this be FallingState?
   func _init(bird, linearVelocity: float = 0).(bird, 0, linearVelocity) -> void:
     bird.animationPlayer.play("Flying")
 
-  func exit() -> void: 
+  func exit() -> void:
     .exit()
 
 # in-play state
@@ -132,6 +145,7 @@ class JumpingState extends BirdState:
   ).(bird, gravityScale, linearVelocity) -> void:
     angularVelocity = angVel
     jumpVelocity = jumpVel
+    jump()
 
   func update(_delta: float) -> void:
     applyAngularVelocityWhenFalling()
@@ -173,6 +187,10 @@ class JumpingState extends BirdState:
     bird.linear_velocity = Vector2(bird.get_linear_velocity().x, jumpVelocity)
     bird.angular_velocity = -angularVelocity
     bird.animationPlayer.play("Flap")
+
+  func _on_body_entered(body):
+    if body.is_in_group(Game.pipeGroup):
+      bird.set_state(bird.State.HIT)
 
 # bird hits pipes/ground
 class HitState extends BirdState:

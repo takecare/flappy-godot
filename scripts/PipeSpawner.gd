@@ -11,12 +11,13 @@ export(int) var hMinDistance = 70
 export var hOffsetVariation = [10, 15, 20, 25, 30, 35]
 export var vOffsetVariation = [0, 10, 20, -20, -10]
 export var openings = [50, 55, 60, 65]
+export(float) var defaultOpening = 55.0
 
 onready var container: Node = get_node(containerPath) if containerPath != null else get_node("Container")
 onready var camera: Camera2D = get_node(cameraPath) if cameraPath != null else Utils.get_main_camera()
 onready var yBaseline: int = Utils.get_screen_size().y / 2
 
-onready var currentState: PipeSpawnerState = SpawningState.new(pipeScene, self, 121, 121)
+onready var currentState: PipeSpawnerState = SpawningState.new(pipeScene, self, 121, 121, defaultOpening)
 
 enum State { IDLE, SPAWNING, PLAYING }
 
@@ -34,7 +35,7 @@ func set_state(state: int) -> void:
     State.IDLE:
       currentState = IdleState.new(pipeScene, self)
     State.SPAWNING:
-      currentState = SpawningState.new(pipeScene, self, 121, 121)
+      currentState = SpawningState.new(pipeScene, self, 121, 121, defaultOpening)
     State.PLAYING:
       currentState = PlayingState.new(pipeScene, self, hMinDistance, hOffsetVariation, vOffsetVariation, yBaseline, openings)
 
@@ -67,29 +68,31 @@ class IdleState extends PipeSpawnerState:
 
 # spawns all pipes at a constant distance, position and with constant opening
 class SpawningState extends PipeSpawnerState:
-  const OPENING: float = 55.0
-  var xDistance: float
-  var yDistance: float
+  var opening: float
+  var hDistance: float
+  var yPosition: float
 
   func _init(
     scene,
     spawner,
-    xDis: float,
-    yDis: float
+    hDis: float,
+    yPos: float,
+    open: float
     ).(scene, spawner) -> void:
-    xDistance = xDis
-    yDistance = yDis
+    hDistance = hDis
+    yPosition = yPos
+    opening = open
 
   func spawnPipe() -> void:
     var newPipes = pipeScene.instance()
     newPipes.init(pipeSpawner.position, pipeSpawner.camera)
-    newPipes.set_opening(OPENING)
+    newPipes.set_opening(opening)
     newPipes.connect("pipe_freed", pipeSpawner, "spawnNextPipe")
     pipeSpawner.container.add_child(newPipes)
 
   func moveToNextPosition() -> void:
-    pipeSpawner.position.x = pipeSpawner.position.x + xDistance
-    pipeSpawner.position.y = yDistance
+    pipeSpawner.position.x = pipeSpawner.position.x + hDistance
+    pipeSpawner.position.y = yPosition
 
 # spawns pipes randomly within the limits set
 class PlayingState extends PipeSpawnerState:

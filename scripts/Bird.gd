@@ -2,7 +2,7 @@ extends RigidBody2D
 
 class_name Bird, "res://sprites/bird_orange_0.png"
 
-enum State { FLYING, JUMPING, HIT }
+enum State { FLYING, JUMPING, HIT, GROUND }
 signal bird_state_changed
 
 export(float) var GRAVITY_SCALE: float = 5
@@ -12,9 +12,9 @@ export(float) var ANGULAR_VELOCITY: float = 5
 export(NodePath) var animationPlayerPath = null
 export(NodePath) var animatedSpritePath = null
 
-onready var animatedSprite: AnimationPlayer = get_node(animatedSpritePath) if animatedSpritePath != null else get_node("AnimatedSprite")
+onready var animatedSprite: AnimatedSprite = get_node(animatedSpritePath) if animatedSpritePath != null else get_node("AnimatedSprite")
 onready var animationPlayer: AnimationPlayer = get_node(animationPlayerPath) if animationPlayerPath != null else get_node("AnimationPlayer")
-onready var currentState: BirdState = FlyingState.new(self, HORIZONTAL_VELOCITY) #JumpingState.new(self, GRAVITY_SCALE, HORIZONTAL_VELOCITY, ANGULAR_VELOCITY, JUMP_Y_VELOCITY)
+onready var currentState: BirdState = FlyingState.new(self, HORIZONTAL_VELOCITY)
 
 func _ready() -> void:
   var _result = connect("body_entered", self, "_on_body_entered")
@@ -39,12 +39,13 @@ func set_state(state: int):
     State.JUMPING:
       currentState = JumpingState.new(self, GRAVITY_SCALE, HORIZONTAL_VELOCITY, ANGULAR_VELOCITY, JUMP_Y_VELOCITY)
     State.HIT:
-      currentState = HitState.new(self)
+      currentState = HitState.new(self, GRAVITY_SCALE, HORIZONTAL_VELOCITY/2)
+    State.GROUND:
+      currentState = GroundState.new(self, GRAVITY_SCALE)
   emit_signal("bird_state_changed", state)
 
 func _on_body_entered(body: Node):
-  print("body entered")
-  currentState._on_body_entered(body)
+  currentState.bodyEntered(body)
 
 # base state
 class BirdState:
@@ -105,11 +106,10 @@ class BirdState:
   func isFalling() -> bool:
     return bird.linear_velocity.y > 0
 
-  func _on_body_entered(body):
+  func bodyEntered(body):
     pass
 
   func exit() -> void:
-    print("base bird exit")
     bird.animationPlayer.stop()
     bird.animatedSprite.position = Vector2(0, 0)
     pass
@@ -120,9 +120,6 @@ class FlyingState extends BirdState: # should this be FallingState?
   # -> what if we remove this ctor and just have the parent one?
   func _init(bird, linearVelocity: float = 0).(bird, 0, linearVelocity) -> void:
     bird.animationPlayer.play("Flying")
-
-  func exit() -> void:
-    .exit()
 
 # in-play state
 class JumpingState extends BirdState:
@@ -151,7 +148,6 @@ class JumpingState extends BirdState:
     applyAngularVelocityWhenFalling()
     ensureRotationLimits()
     previousYVelocity = bird.linear_velocity.y
-    pass
 
   func ensureRotationLimits() -> void:
     if bird.rotation_degrees < -MAX_ROTATION_DEG:
@@ -188,24 +184,26 @@ class JumpingState extends BirdState:
     bird.angular_velocity = -angularVelocity
     bird.animationPlayer.play("Flap")
 
-  func _on_body_entered(body):
+  func bodyEntered(body: Node):
     if body.is_in_group(Game.pipeGroup):
       bird.set_state(bird.State.HIT)
+    elif body.is_in_group(Game.groundGroup):
+      bird.set_state(bird.State.GROUND)
 
-# bird hits pipes/ground
+# bird hits pipes
 class HitState extends BirdState:
-  func _init(bird: Bird = null).(bird) -> void:
-    pass
+  func _init(bird: Bird = null, gravityScale: float = 0, linearVelocity: float = 0).(bird, gravityScale, linearVelocity) -> void:
+    bird.angular_velocity = 2
+    bird.add_collision_exception_with(bird.get_colliding_bodies()[0])
 
-  func update(delta: float) -> void:
-    pass
+  func bodyEntered(body: Node):
+    if body.is_in_group(Game.pipeGroup):
+      bird.set_state(bird.State.HIT)
+    elif body.is_in_group(Game.groundGroup):
+      bird.set_state(bird.State.GROUND)
 
-  func updateForces(state: Physics2DDirectBodyState) -> void:
-    pass
-
-  func handleInput(event: InputEvent) -> void:
-    pass
-
-  func exit() -> void:
-    .exit()
-    pass
+# bird hits ground
+class GroundState extends BirdState:
+  func _init(bird: Bird = null, gravityScale: float = 0).(bird, gravityScale) -> void:
+    # bird.angular_velocity = 0
+    bird.linear_velocity = Vector2(0, 0)

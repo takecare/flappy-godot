@@ -32,14 +32,14 @@ anchor_mode = 0
 current = true
 script = ExtResource( 3 )
 
-[node name="Bird" parent="." instance=ExtResource( 2 )]
-position = Vector2( 32, 116 )
-
 [node name="PipeSpawner" parent="." instance=ExtResource( 5 )]
 position = Vector2( 150, 0 )
 initialPipes = 5
 
 [node name="GroundSpawner" parent="." instance=ExtResource( 4 )]
+
+[node name="Bird" parent="." instance=ExtResource( 2 )]
+position = Vector2( 32, 116 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
 

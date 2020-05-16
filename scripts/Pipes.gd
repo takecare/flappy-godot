@@ -15,7 +15,8 @@ func init(pos: Vector2, cam: Camera2D) -> void:
   camera = cam
 
 func _ready() -> void:
-  add_to_group(Game.pipeGroup)
+  get_top().add_to_group(Game.pipeGroup)
+  get_bottom().add_to_group(Game.pipeGroup)
 
 func get_top() -> StaticBody2D:
   return get_node("Top") as StaticBody2D

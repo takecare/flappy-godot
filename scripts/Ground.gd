@@ -7,6 +7,9 @@ class_name Ground, "res://sprites/ground_icon.png"
 # onready var rightmostPoint: Position2D = get_node("Rightmost")
 # onready var sprite: Node2D = get_node("Sprite")
 
+func _ready() -> void:
+  add_to_group(Game.groundGroup)
+
 func get_size() -> Vector2:
   return get_node("Sprite").texture.get_size()
 

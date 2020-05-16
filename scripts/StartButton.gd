@@ -8,8 +8,10 @@ onready var pipeSpawner: PipeSpawner = get_node(pipeSpawnerPath) if pipeSpawnerP
 
 func _ready() -> void:
   var _ignored = connect("pressed", self, "_on_pressed")
+  grab_focus()
 
 func _on_pressed() -> void:
+  # these should be in some sort of "game manager"
   pipeSpawner.set_state(pipeSpawner.State.PLAYING)
   bird.set_state(bird.State.JUMPING)
   hide()

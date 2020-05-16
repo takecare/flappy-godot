@@ -11,9 +11,11 @@ export(float) var HORIZONTAL_VELOCITY: float = 50
 export(float) var ANGULAR_VELOCITY: float = 5
 export(NodePath) var animationPlayerPath = null
 export(NodePath) var animatedSpritePath = null
+export(NodePath) var collisionShapePath = null
 
 onready var animatedSprite: AnimatedSprite = get_node(animatedSpritePath) if animatedSpritePath != null else get_node("AnimatedSprite")
 onready var animationPlayer: AnimationPlayer = get_node(animationPlayerPath) if animationPlayerPath != null else get_node("AnimationPlayer")
+onready var collisionShape: CollisionShape2D = get_node(collisionShapePath) if collisionShapePath != null else get_node("CollisionShape")
 onready var currentState: BirdState = FlyingState.new(self, HORIZONTAL_VELOCITY)
 
 func _ready() -> void:
@@ -31,6 +33,9 @@ func _unhandled_input(event: InputEvent):
 func _integrate_forces(state):
   currentState.updateForces(state)
 
+func _on_body_entered(body: Node):
+  currentState.bodyEntered(body)
+
 func set_state(state: int):
   currentState.exit()
   match state:
@@ -44,9 +49,6 @@ func set_state(state: int):
       currentState = GroundState.new(self, GRAVITY_SCALE)
   emit_signal("bird_state_changed", state)
 
-func _on_body_entered(body: Node):
-  currentState.bodyEntered(body)
-
 # base state
 class BirdState:
   # used for debugging:
@@ -54,8 +56,8 @@ class BirdState:
   var customPosition: Vector2 = Vector2(0,0)
   var bird: Bird = null
 
-  func _init(b: Bird = null, gravityScale: float = 0, linearVelocity: float = 0) -> void:
-    bird = b
+  func _init(brd: Bird = null, gravityScale: float = 0, linearVelocity: float = 0) -> void:
+    bird = brd
     bird.gravity_scale = gravityScale
     bird.linear_velocity = Vector2(linearVelocity, bird.linear_velocity.y)
 
@@ -106,13 +108,12 @@ class BirdState:
   func isFalling() -> bool:
     return bird.linear_velocity.y > 0
 
-  func bodyEntered(body):
+  func bodyEntered(_body: Node) -> void:
     pass
 
   func exit() -> void:
     bird.animationPlayer.stop()
     bird.animatedSprite.position = Vector2(0, 0)
-    pass
 
 # bird is flying across the scene, no input expected
 class FlyingState extends BirdState: # should this be FallingState?
@@ -194,6 +195,7 @@ class JumpingState extends BirdState:
 class HitState extends BirdState:
   func _init(bird: Bird = null, gravityScale: float = 0, linearVelocity: float = 0).(bird, gravityScale, linearVelocity) -> void:
     bird.angular_velocity = 2
+    bird.collisionShape.scale = Vector2(0.5, 0.5)
     bird.add_collision_exception_with(bird.get_colliding_bodies()[0])
 
   func bodyEntered(body: Node):
@@ -205,5 +207,7 @@ class HitState extends BirdState:
 # bird hits ground
 class GroundState extends BirdState:
   func _init(bird: Bird = null, gravityScale: float = 0).(bird, gravityScale) -> void:
-    # bird.angular_velocity = 0
+    # we change the scale to not make it obvious that the collision shape is
+    # actually a bit higher than the sprite - cheeky
+    bird.collisionShape.scale = Vector2(0.8, 0.5)
     bird.linear_velocity = Vector2(0, 0)

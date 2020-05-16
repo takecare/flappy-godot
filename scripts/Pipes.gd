@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Pipes, "res://sprites/pipe_icon.png"
 
-signal pipeFreed
+signal pipe_freed
 
 var top: Node setget ,get_top
 var bottom: Node setget ,get_bottom
@@ -13,6 +13,9 @@ var camera: Camera2D # could be a CameraPositionProvider
 func init(pos: Vector2, cam: Camera2D) -> void:
   position = pos
   camera = cam
+
+func _ready() -> void:
+  add_to_group(Game.pipeGroup)
 
 func get_top() -> StaticBody2D:
   return get_node("Top") as StaticBody2D
@@ -33,7 +36,7 @@ func _process(_delta: float) -> void:
     return
   if cameraIsPastPipes():
     queue_free()
-    emit_signal("pipeFreed")
+    emit_signal("pipe_freed")
 
 func cameraIsPastPipes() -> bool:
   return camera.get_correct_position().x > get_rightmost_point().x

@@ -48,18 +48,17 @@ class PipeSpawnerState:
     pipeSpawner = spawner
 
   func spawnNextPipe():
-    print("spawnNextPipe()")
     moveToNextPosition()
     spawnPipe()
 
   func moveToNextPosition():
-    print("base moveToNextPosition")
+    pass
 
   func spawnPipe():
-    print("base spawnPipe")
+    pass
 
   func exit():
-    print("base exit")
+    pass
 
 # no pipes are spawned
 class IdleState extends PipeSpawnerState:
@@ -85,7 +84,7 @@ class SpawningState extends PipeSpawnerState:
     var newPipes = pipeScene.instance()
     newPipes.init(pipeSpawner.position, pipeSpawner.camera)
     newPipes.set_opening(OPENING)
-    newPipes.connect("pipeFreed", pipeSpawner, "spawnNextPipe")
+    newPipes.connect("pipe_freed", pipeSpawner, "spawnNextPipe")
     pipeSpawner.container.add_child(newPipes)
 
   func moveToNextPosition() -> void:
@@ -119,7 +118,7 @@ class PlayingState extends PipeSpawnerState:
     var newPipes = pipeScene.instance()
     newPipes.init(pipeSpawner.position, pipeSpawner.camera)
     newPipes.set_opening(openings[randi() % openings.size()])
-    newPipes.connect("pipeFreed", pipeSpawner, "spawnNextPipe")
+    newPipes.connect("pipe_freed", pipeSpawner, "spawnNextPipe")
     pipeSpawner.container.add_child(newPipes)
     pass
 

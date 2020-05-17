@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/Background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Bird.tscn" type="PackedScene" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://scenes/GroundSpawner.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/PipeSpawner.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/StartButton.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scripts/ScoreLabel.gd" type="Script" id=7]
+[ext_resource path="res://fonts/04b19.tres" type="DynamicFont" id=8]
 
 [node name="Node" type="Node"]
 
@@ -27,3 +29,16 @@ position = Vector2( 32, 116 )
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="StartButton" parent="HUD" instance=ExtResource( 6 )]
+
+[node name="ScoreLabel" type="Label" parent="HUD"]
+margin_top = 10.0
+margin_right = 144.0
+margin_bottom = 24.0
+custom_fonts/font = ExtResource( 8 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "0"
+align = 1
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

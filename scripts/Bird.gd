@@ -23,7 +23,6 @@ func _ready() -> void:
   var _result = connect("body_entered", self, "_on_body_entered")
   contact_monitor = true
   contacts_reported = 1
-  pass
 
 func _physics_process(delta: float):
   currentState.update(delta)
@@ -41,7 +40,7 @@ func set_state(state: int):
   currentState.exit()
   match state:
     State.FLYING:
-      currentState = JumpingState.new(self, HORIZONTAL_VELOCITY)
+      currentState = FlyingState.new(self, HORIZONTAL_VELOCITY)
     State.JUMPING:
       currentState = JumpingState.new(self, GRAVITY_SCALE, HORIZONTAL_VELOCITY, ANGULAR_VELOCITY, JUMP_Y_VELOCITY)
     State.HIT:
@@ -49,6 +48,9 @@ func set_state(state: int):
     State.GROUND:
       currentState = GroundState.new(self, GRAVITY_SCALE)
   emit_signal("bird_state_changed", state)
+
+func isFlying() -> bool:
+  return currentState is JumpingState or currentState is FlyingState
 
 # base state
 class BirdState:

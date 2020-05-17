@@ -19,6 +19,7 @@ onready var collisionShape: CollisionShape2D = get_node(collisionShapePath) if c
 onready var currentState: BirdState = FlyingState.new(self, HORIZONTAL_VELOCITY)
 
 func _ready() -> void:
+  add_to_group(Game.birdGroup)
   var _result = connect("body_entered", self, "_on_body_entered")
   contact_monitor = true
   contacts_reported = 1

@@ -7,8 +7,11 @@ signal pipe_freed
 var top: Node setget ,get_top
 var bottom: Node setget ,get_bottom
 var rightmost: Vector2 setget ,get_rightmost_point
+export(NodePath) var checkpointPath = null
 
 var camera: Camera2D # could be a CameraPositionProvider
+
+onready var checkpoint: Node2D = get_node(checkpointPath) if checkpointPath != null else get_node("Checkpoint")
 
 func init(pos: Vector2, cam: Camera2D) -> void:
   position = pos
@@ -28,6 +31,7 @@ func set_opening(opening: int):
   var spacing: int = opening / 2
   get_top().position.y -= spacing
   get_bottom().position.y += spacing
+  checkpoint.set_size(opening)
 
 func get_rightmost_point() -> Vector2:
   return get_node("Rightmost").global_position

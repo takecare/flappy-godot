@@ -37,6 +37,8 @@ func set_state(state: int) -> void:
     State.SPAWNING:
       currentState = SpawningState.new(pipeScene, self, 121, 121, defaultOpening)
     State.PLAYING:
+      for child in container.get_children():
+        child.activate()
       currentState = PlayingState.new(pipeScene, self, hMinDistance, hOffsetVariation, vOffsetVariation, yBaseline, openings)
 
 # base state
@@ -48,14 +50,14 @@ class PipeSpawnerState:
     pipeScene = scene
     pipeSpawner = spawner
 
-  func spawnNextPipe():
+  func spawnNextPipe() -> void:
     moveToNextPosition()
     spawnPipe()
 
-  func moveToNextPosition():
+  func moveToNextPosition() -> void:
     pass
 
-  func spawnPipe():
+  func spawnPipe() -> void:
     pass
 
   func exit():
@@ -122,6 +124,7 @@ class PlayingState extends PipeSpawnerState:
     newPipes.init(pipeSpawner.position, pipeSpawner.camera)
     newPipes.set_opening(openings[randi() % openings.size()])
     newPipes.connect("pipe_freed", pipeSpawner, "spawnNextPipe")
+    newPipes.activate()
     pipeSpawner.container.add_child(newPipes)
     pass
 

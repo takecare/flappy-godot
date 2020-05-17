@@ -6,12 +6,10 @@ signal pipe_freed
 
 var top: Node setget ,get_top
 var bottom: Node setget ,get_bottom
+var checkpoint: Node setget ,get_checkpoint
 var rightmost: Vector2 setget ,get_rightmost_point
-export(NodePath) var checkpointPath = null
 
 var camera: Camera2D # could be a CameraPositionProvider
-
-onready var checkpoint: Node2D = get_node(checkpointPath) if checkpointPath != null else get_node("Checkpoint")
 
 func init(pos: Vector2, cam: Camera2D) -> void:
   position = pos
@@ -27,11 +25,14 @@ func get_top() -> StaticBody2D:
 func get_bottom() -> StaticBody2D:
   return get_node("Bottom") as StaticBody2D
 
+func get_checkpoint() -> Checkpoint:
+  return get_node("Checkpoint") as Checkpoint
+
 func set_opening(opening: int):
   var spacing: int = opening / 2
   get_top().position.y -= spacing
   get_bottom().position.y += spacing
-  checkpoint.set_size(opening)
+  get_checkpoint().set_height(opening)
 
 func get_rightmost_point() -> Vector2:
   return get_node("Rightmost").global_position
@@ -45,3 +46,6 @@ func _process(_delta: float) -> void:
 
 func cameraIsPastPipes() -> bool:
   return camera.get_correct_position().x > get_rightmost_point().x
+
+func activate() -> void:
+  get_checkpoint().activate()

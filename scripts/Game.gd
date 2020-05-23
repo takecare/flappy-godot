@@ -19,7 +19,6 @@ func increase_score() -> void:
 
 func set_score(val) -> void:
     score = val
-    print("set")
 
 func set_bestScore(val) -> void:
     bestScore = val

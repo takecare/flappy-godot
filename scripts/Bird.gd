@@ -3,7 +3,10 @@ extends RigidBody2D
 class_name Bird, "res://sprites/bird_orange_0.png"
 
 enum State { FLYING, JUMPING, HIT, GROUND }
-signal bird_state_changed
+signal bird_flying
+signal bird_jumping
+signal bird_hit
+signal bird_grounded
 
 export(float) var GRAVITY_SCALE: float = 5
 export(float) var JUMP_Y_VELOCITY: float = -150
@@ -41,13 +44,16 @@ func set_state(state: int):
   match state:
     State.FLYING:
       currentState = FlyingState.new(self, HORIZONTAL_VELOCITY)
+      emit_signal("bird_flying")
     State.JUMPING:
       currentState = JumpingState.new(self, GRAVITY_SCALE, HORIZONTAL_VELOCITY, ANGULAR_VELOCITY, JUMP_Y_VELOCITY)
+      emit_signal("bird_jumping")
     State.HIT:
       currentState = HitState.new(self, GRAVITY_SCALE, HORIZONTAL_VELOCITY/2)
+      emit_signal("bird_hit")
     State.GROUND:
       currentState = GroundState.new(self, GRAVITY_SCALE)
-  emit_signal("bird_state_changed", state)
+      emit_signal("bird_grounded")
 
 func isFlying() -> bool:
   return currentState is JumpingState or currentState is FlyingState

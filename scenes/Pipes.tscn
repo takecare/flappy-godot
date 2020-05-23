@@ -42,4 +42,9 @@ shape = SubResource( 2 )
 position = Vector2( 13, 0 )
 
 [node name="Checkpoint" parent="." instance=ExtResource( 4 )]
+position = Vector2( 10, 0 )
 input_pickable = false
+gravity_vec = Vector2( 0, 0 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0

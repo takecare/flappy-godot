@@ -8,7 +8,17 @@ onready var gameOverContainer: Control = get_node(gameOverContainerPath) if game
 
 func _ready() -> void:
   var _result
-  _result = bird.connect("bird_flying", gameOverContainer, "_on_bird_flying")
-  _result = bird.connect("bird_jumping", gameOverContainer, "_on_bird_jumping")
   _result = bird.connect("bird_hit", gameOverContainer, "_on_bird_hit")
   _result = bird.connect("bird_grounded", gameOverContainer, "_on_bird_grounded")
+
+func _on_bird_flying() -> void:
+  pass
+
+func _on_bird_jumping() -> void:
+  pass
+
+func _on_bird_hit() -> void:
+  pass
+
+func _on_bird_grounded() -> void:
+  pass

@@ -52,5 +52,6 @@ margin_bottom = 22.0
 texture = ExtResource( 8 )
 
 [node name="GameOverContainer" parent="HUD" instance=ExtResource( 9 )]
+visible = false
 margin_top = 52.0
 margin_bottom = 189.0

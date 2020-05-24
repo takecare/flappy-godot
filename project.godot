@@ -58,6 +58,7 @@ config/icon="res://icon.png"
 
 Game="*res://scripts/Game.gd"
 Utils="*res://scripts/Utils.gd"
+StageManager="*res://scenes/StageManager.tscn"
 
 [display]
 

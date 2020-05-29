@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/ScoreContainer.gd" type="Script" id=1]
+[ext_resource path="res://sprites/number_large_0.png" type="Texture" id=2]
+
+[node name="ScoreContainer" type="HBoxContainer"]
+margin_right = 144.0
+margin_bottom = 22.0
+alignment = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreTexture" type="TextureRect" parent="."]
+margin_left = 66.0
+margin_right = 78.0
+margin_bottom = 22.0
+texture = ExtResource( 2 )

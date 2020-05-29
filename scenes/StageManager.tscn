@@ -4,7 +4,7 @@
 
 [sub_resource type="GradientTexture" id=1]
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "FadeFromBlack"
 length = 0.5
 tracks/0/type = "value"
@@ -34,8 +34,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "FadeToBlack"
+[sub_resource type="Animation" id=3]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("BlackOverlay:modulate")
@@ -81,5 +80,5 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_speed = 3.0
-anims/FadeFromBlack = SubResource( 3 )
-anims/FadeToBlack = SubResource( 2 )
+anims/FadeFromBlack = SubResource( 2 )
+anims/FadeToBlack = SubResource( 3 )

@@ -4,6 +4,7 @@ signal score_changed
 signal best_score_changed
 
 const birdGroup = "birdGroup"
+const skyGroup = "sky"
 const pipeGroup = "pipes"
 const groundGroup = "grounds"
 

@@ -11,6 +11,7 @@ func _ready() -> void:
 func _on_body_entered(body: Node):
   if (body.is_in_group(Game.birdGroup) && enabled):
     Game.increase_score()
+    deactivate()
 
 func _on_game_started():
   activate()

@@ -1,5 +1,6 @@
 extends RigidBody2D
 
+# godot extensions
 class_name Bird, "res://sprites/bird_orange_0.png"
 
 enum State { FLYING, JUMPING, HIT, GROUND }
@@ -8,6 +9,7 @@ signal bird_jumping
 signal bird_hit
 signal bird_grounded
 
+# editor properties
 export(float) var GRAVITY_SCALE: float = 5
 export(float) var JUMP_Y_VELOCITY: float = -150
 export(float) var HORIZONTAL_VELOCITY: float = 50
@@ -33,7 +35,7 @@ func _physics_process(delta: float):
 func _unhandled_input(event: InputEvent):
   currentState.handleInput(event)
 
-func _integrate_forces(state):
+func _integrate_forces(state: Physics2DDirectBodyState):
   currentState.updateForces(state)
 
 func _on_body_entered(body: Node):
@@ -58,11 +60,13 @@ func set_state(state: int):
 func isFlying() -> bool:
   return currentState is JumpingState or currentState is FlyingState
 
+# separating a script into multiple ones:
+# https://godotengine.org/qa/20710/project-with-multiple-files-gd-script-godot-3-0
+
 # base state
 class BirdState:
-  # used for debugging:
-  var customPositionWasSet: bool = false
-  var customPosition: Vector2 = Vector2(0,0)
+  var customPositionWasSet: bool = false # used for debugging
+  var customPosition: Vector2 = Vector2(0,0) # used for debugging
   var bird: Bird = null
 
   func _init(brd: Bird = null, gravityScale: float = 0, linearVelocity: float = 0) -> void:
@@ -124,8 +128,8 @@ class BirdState:
     bird.animationPlayer.stop()
     bird.animatedSprite.position = Vector2(0, 0)
 
-# bird is flying across the scene, no input expected
-class FlyingState extends BirdState: # should this be FallingState?
+# bird is flying across the scene (idle), no input expected
+class FlyingState extends BirdState:
   # we're forced by gdscript to have a default value of null
   # -> what if we remove this ctor and just have the parent one?
   func _init(bird, linearVelocity: float = 0).(bird, 0, linearVelocity) -> void:
@@ -142,14 +146,13 @@ class JumpingState extends BirdState:
   var angularVelocity: float
   var jumpVelocity: float
 
-  # we cannot define the type of 'bird' otherwise we won't be able to instantiate this state
   func _init(
-    bird = null,
+    bird: Bird = null,
     gravityScale: float = 0,
     linearVelocity: float = 0,
     angVel: float = 0,
     jumpVel: float = 0
-  ).(bird, gravityScale, linearVelocity) -> void:
+    ).(bird, gravityScale, linearVelocity) -> void:
     angularVelocity = angVel
     jumpVelocity = jumpVel
     jump()
@@ -195,12 +198,12 @@ class JumpingState extends BirdState:
     bird.animationPlayer.play("Flap")
 
   func bodyEntered(body: Node):
-    if body.is_in_group(Game.pipeGroup):
+    if body.is_in_group(Game.pipeGroup) || body.is_in_group(Game.skyGroup):
       bird.set_state(bird.State.HIT)
     elif body.is_in_group(Game.groundGroup):
       bird.set_state(bird.State.GROUND)
 
-# bird hits pipes
+# bird has hit a pipe
 class HitState extends BirdState:
   func _init(bird: Bird = null, gravityScale: float = 0, linearVelocity: float = 0).(bird, gravityScale, linearVelocity) -> void:
     bird.angular_velocity = 2

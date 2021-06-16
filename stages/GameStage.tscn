@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/Background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Bird.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://scenes/ScoreContainer.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/StageManager.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/GameOverContainer.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/Sky.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scripts/GameStage.gd" type="Script" id=16]
 
 [node name="GameStage" type="Node"]
@@ -24,7 +25,7 @@ current = true
 script = ExtResource( 3 )
 
 [node name="PipeSpawner" parent="." instance=ExtResource( 5 )]
-position = Vector2( 150, 0 )
+position = Vector2( 148, 4 )
 
 [node name="GroundSpawner" parent="." instance=ExtResource( 4 )]
 
@@ -34,6 +35,8 @@ position = Vector2( 32, 116 )
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="StartButton" parent="HUD" instance=ExtResource( 6 )]
+margin_top = -0.428421
+margin_bottom = 255.572
 
 [node name="ScoreContainer" parent="HUD" instance=ExtResource( 7 )]
 margin_top = 10.0
@@ -45,3 +48,9 @@ margin_top = 52.0
 margin_bottom = 189.0
 
 [node name="StageManager" parent="." instance=ExtResource( 8 )]
+
+[node name="Sky" parent="." instance=ExtResource( 10 )]
+position = Vector2( 0, -15 )
+cameraPath = NodePath("../Camera")
+
+[editable path="Bird"]

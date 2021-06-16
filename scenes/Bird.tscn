@@ -92,9 +92,6 @@ tracks/1/keys = {
 [node name="Bird" type="RigidBody2D"]
 linear_damp = 0.0
 script = ExtResource( 4 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, 1.60072 )

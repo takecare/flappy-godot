@@ -9,7 +9,7 @@ var bottom: Node setget ,get_bottom
 var checkpoint: Node setget ,get_checkpoint
 var rightmost: Vector2 setget ,get_rightmost_point
 
-var camera: Camera2D # could be a CameraPositionProvider
+var camera: Camera2D # TODO could be a CameraPositionProvider
 
 func init(pos: Vector2, cam: Camera2D) -> void:
   position = pos

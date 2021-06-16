@@ -68,7 +68,6 @@ layer = 2
 script = ExtResource( 1 )
 
 [node name="BlackOverlay" type="TextureRect" parent="."]
-modulate = Color( 1, 1, 1, 0 )
 margin_right = 144.0
 margin_bottom = 256.0
 texture = SubResource( 1 )

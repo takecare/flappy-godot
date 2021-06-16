@@ -12,7 +12,7 @@ func _ready() -> void:
   add_to_group(Game.skyGroup)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta) -> void:
+func _process(_delta) -> void:
   if camera != null:
     position.x = camera.position.x - extents.x / 2
   else:

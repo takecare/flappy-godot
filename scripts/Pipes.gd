@@ -29,7 +29,7 @@ func get_checkpoint() -> Checkpoint:
   return get_node("Checkpoint") as Checkpoint
 
 func set_opening(opening: int):
-  var spacing: int = opening / 2
+  var spacing: float = opening / 2.0
   get_top().position.y -= spacing
   get_bottom().position.y += spacing
   get_checkpoint().set_height(opening)

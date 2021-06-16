@@ -15,6 +15,7 @@ const sprites = [
 
 func _ready() -> void:
   var _result = Game.connect("score_changed", self, "_on_score_changed")
+  _on_score_changed(Game.score)
 
 func _on_score_changed(score) -> void:
   for child in get_children():

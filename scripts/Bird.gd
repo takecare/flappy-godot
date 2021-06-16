@@ -59,6 +59,9 @@ func set_state(state: int):
 
 func isFlying() -> bool:
   return currentState is JumpingState or currentState is FlyingState
+  
+func isHit() -> bool:
+  return currentState is HitState or currentState is GroundState
 
 # separating a script into multiple ones:
 # https://godotengine.org/qa/20710/project-with-multiple-files-gd-script-godot-3-0
@@ -214,9 +217,7 @@ class HitState extends BirdState:
     bird.add_collision_exception_with(bird.get_colliding_bodies()[0])
 
   func bodyEntered(body: Node):
-    if body.is_in_group(Game.pipeGroup):
-      bird.set_state(bird.State.HIT)
-    elif body.is_in_group(Game.groundGroup):
+    if body.is_in_group(Game.groundGroup):
       bird.set_state(bird.State.GROUND)
 
 # bird has hit the ground

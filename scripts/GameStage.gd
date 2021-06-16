@@ -12,7 +12,6 @@ func _ready() -> void:
   _result = bird.connect("bird_grounded", gameOverContainer, "_on_bird_grounded")
 
 func _on_bird_flying() -> void:
-  Game.reset_score()
   pass
 
 func _on_bird_jumping() -> void:

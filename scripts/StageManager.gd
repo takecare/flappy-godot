@@ -10,6 +10,7 @@ onready var animationPlayer: AnimationPlayer = get_node(animationPlayerPath) if 
 onready var overlay: TextureRect = get_node(overlayPath) if overlayPath != null else get_node("BlackOverlay")
 
 var nextStage: String = ""
+var isChangingState = false
 
 func _ready() -> void:
   overlay.hide()
@@ -21,7 +22,12 @@ func changeToGameStage() -> void:
 func changeStage(stageName: String) -> void:
   if (stageName.empty()):
     push_error("stageName cannot be empty!")
+    return
+  if isChangingState:
+    push_warning("State change already in progress")
+    return
   nextStage = stageName
+  isChangingState = true
   overlay.show()
   animationPlayer.play(FADE_IN_ANIMATION)
 
@@ -31,4 +37,5 @@ func _fadeout_finished() -> void:
 
 func _fadein_finished() -> void:
   var _result = get_tree().change_scene(nextStage)
+  isChangingState = false
   animationPlayer.play(FADE_OUT_ANIMATION)

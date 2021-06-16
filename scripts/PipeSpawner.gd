@@ -1,6 +1,6 @@
 extends Node2D
 
-class_name PipeSpawner
+class_name PipeSpawner, "res://sprites/pipe_spawner_icon.png"
 
 export(NodePath) var cameraPath = null
 export(NodePath) var containerPath = null

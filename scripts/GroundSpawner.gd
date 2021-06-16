@@ -1,6 +1,6 @@
 extends Node2D
 
-class_name GroundSpawner
+class_name GroundSpawner, "res://sprites/ground_spawner_icon.png"
 
 const NUM_OF_GROUND_INSTANCES = 3
 

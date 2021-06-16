@@ -48,8 +48,8 @@ _global_script_class_icons={
 "Bird": "res://sprites/bird_orange_0.png",
 "Checkpoint": "",
 "Ground": "res://sprites/ground_icon.png",
-"GroundSpawner": "",
-"PipeSpawner": "",
+"GroundSpawner": "res://sprites/ground_spawner_icon.png",
+"PipeSpawner": "res://sprites/pipe_spawner_icon.png",
 "Pipes": "res://sprites/pipe_icon.png",
 "SkyLimit": "res://sprites/background_day.png"
 }

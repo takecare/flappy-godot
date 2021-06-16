@@ -96,6 +96,13 @@ margin_right = 128.0
 margin_bottom = 57.0
 texture = ExtResource( 7 )
 
+[node name="ScoreContainer" type="HBoxContainer" parent="ScorePanelContainer/ScorePanel"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Buttons" type="HBoxContainer" parent="."]
 visible = false
 margin_top = 108.0

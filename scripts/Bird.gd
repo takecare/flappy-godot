@@ -126,6 +126,8 @@ class BirdState:
 
   func exit() -> void:
     bird.animationPlayer.stop()
+    # reset the position or else there will be a visible offset on the sprite
+    # when the rotation is applied (because of the Flap animation)
     bird.animatedSprite.position = Vector2(0, 0)
 
 # bird is flying across the scene (idle), no input expected
@@ -134,6 +136,7 @@ class FlyingState extends BirdState:
   # -> what if we remove this ctor and just have the parent one?
   func _init(bird, linearVelocity: float = 0).(bird, 0, linearVelocity) -> void:
     bird.animationPlayer.play("Flying")
+    pass
 
 # in-play state
 class JumpingState extends BirdState:

@@ -10,8 +10,5 @@ func get_main_node() -> Node:
 func get_screen_size() -> Vector2:
   return get_viewport().get_visible_rect().size
 
-func get_path_or_node(path, name) -> Node:
-  return get_node(name) if path != null else get_node(path)
-
 func get_main_camera() -> Camera2D:
   return Utils.get_main_node().get_node("Camera") as Camera2D

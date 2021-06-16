@@ -75,11 +75,11 @@ class SpawningState extends PipeSpawnerState:
   var yPosition: float
 
   func _init(
-    scene,
-    spawner,
-    hDis: float,
-    yPos: float,
-    open: float
+      scene,
+      spawner,
+      hDis: float,
+      yPos: float,
+      open: float
     ).(scene, spawner) -> void:
     hDistance = hDis
     yPosition = yPos
@@ -105,13 +105,13 @@ class PlayingState extends PipeSpawnerState:
   var openings: Array
 
   func _init(
-    scene,
-    spawner,
-    hMinDis: float,
-    hOffsetVar: Array,
-    vOffsetVar: Array,
-    yBase: float,
-    opens: Array
+      scene,
+      spawner,
+      hMinDis: float,
+      hOffsetVar: Array,
+      vOffsetVar: Array,
+      yBase: float,
+      opens: Array
     ).(scene, spawner) -> void:
     hMinDistance = hMinDis
     hOffsetVariation = hOffsetVar

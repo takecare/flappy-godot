@@ -11,25 +11,58 @@
 
 [sub_resource type="Animation" id=1]
 resource_name = "Show"
-tracks/0/type = "method"
-tracks/0/path = NodePath(".")
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 1 ),
+"times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "show"
-} ]
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("GameOverContainer/GameOver:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("GameOverContainer/GameOver:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 0.25, 1 ),
+"update": 0,
+"values": [ Vector2( 24, -5 ), Vector2( 24, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("ScorePanelContainer:rect_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.25, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 260 ), Vector2( 0, 41 ) ]
 }
 
-[node name="GameOverContainer" type="VBoxContainer"]
+[node name="GameOverContainer" type="Container"]
 margin_right = 144.0
 margin_bottom = 137.0
-custom_constants/separation = 10
 script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -41,6 +74,7 @@ margin_bottom = 21.0
 alignment = 1
 
 [node name="GameOver" type="TextureRect" parent="GameOverContainer"]
+modulate = Color( 1, 1, 1, 0 )
 margin_left = 24.0
 margin_right = 120.0
 margin_bottom = 21.0
@@ -52,9 +86,8 @@ margin_right = 144.0
 margin_bottom = 31.0
 
 [node name="ScorePanelContainer" type="HBoxContainer" parent="."]
-margin_top = 41.0
 margin_right = 144.0
-margin_bottom = 98.0
+margin_bottom = 57.0
 alignment = 1
 
 [node name="ScorePanel" type="TextureRect" parent="ScorePanelContainer"]
@@ -64,6 +97,7 @@ margin_bottom = 57.0
 texture = ExtResource( 7 )
 
 [node name="Buttons" type="HBoxContainer" parent="."]
+visible = false
 margin_top = 108.0
 margin_right = 144.0
 margin_bottom = 137.0

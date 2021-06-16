@@ -50,12 +50,8 @@ margin_bottom = 189.0
 
 [node name="StageManager" parent="." instance=ExtResource( 8 )]
 
-[node name="BlackOverlay" parent="StageManager" index="0"]
-visible = false
-
 [node name="Sky" parent="." instance=ExtResource( 10 )]
 position = Vector2( 0, -15 )
 cameraPath = NodePath("../Camera")
 
 [editable path="Bird"]
-[editable path="StageManager"]

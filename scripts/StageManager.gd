@@ -15,6 +15,7 @@ func _ready() -> void:
   overlay.hide()
 
 func changeToGameStage() -> void:
+  Game.reset_score()
   changeStage("res://stages/GameStage.tscn")
 
 func changeStage(stageName: String) -> void:

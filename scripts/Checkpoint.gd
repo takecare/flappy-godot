@@ -9,7 +9,7 @@ func _ready() -> void:
   var _result = connect("body_entered", self, "_on_body_entered")
 
 func _on_body_entered(body: Node):
-  if (body.is_in_group(Game.birdGroup) && enabled):
+  if body.is_in_group(Game.birdGroup) && enabled:
     Game.increase_score()
     deactivate()
 

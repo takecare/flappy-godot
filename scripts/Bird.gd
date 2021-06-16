@@ -203,7 +203,7 @@ class JumpingState extends BirdState:
     elif body.is_in_group(Game.groundGroup):
       bird.set_state(bird.State.GROUND)
 
-# bird has hit a pipe
+# bird has hit a pipe or the sky
 class HitState extends BirdState:
   func _init(bird: Bird = null, gravityScale: float = 0, linearVelocity: float = 0).(bird, gravityScale, linearVelocity) -> void:
     bird.angular_velocity = 2
@@ -216,7 +216,7 @@ class HitState extends BirdState:
     elif body.is_in_group(Game.groundGroup):
       bird.set_state(bird.State.GROUND)
 
-# bird hits ground
+# bird has hit the ground
 class GroundState extends BirdState:
   func _init(bird: Bird = null, gravityScale: float = 0).(bird, gravityScale) -> void:
     # we change the scale to not make it obvious that the collision shape is

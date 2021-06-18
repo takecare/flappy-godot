@@ -13,30 +13,35 @@ const sprites = [
   preload("res://sprites/number_middle_9.png")
 ]
 
-var lerpTime = 0
-var lerpDuration = 3
-var tempScore = 0
+var LERP_DURATION = 3
+
+export(NodePath) var animationPlayerPath = null
+onready var animationPlayer: AnimationPlayer = get_node(animationPlayerPath) if animationPlayerPath != null else get_node("../../AnimationPlayer")
 
 func _ready() -> void:
   set_score(Game.score)
-  set_process(true)
-  pass
-  
-func _process(delta):
-  lerpTime += delta
-  if lerpTime > lerpDuration:
-    lerpTime = lerpDuration
-  var score = int(lerp(0, 100, lerpTime / lerpDuration))
-  if score != tempScore:
-    tempScore = score
-    set_score(score)
+  yield(animationPlayer, "animation_finished")
+  count_to_score()
+  # i can't figure out why connecting the signal doesn't work
+  #var _result = animationPlayer.connect("animation_finished", self, "count_to_score")
+
+func teste() -> void:
+  print("teste yo")
+
+func count_to_score():
+  print("yo")
+  var lerpTime = 0
+  while lerpTime < LERP_DURATION:
+    lerpTime += get_process_delta_time()  
+    var score = lerp(0, 100, lerpTime / LERP_DURATION)
+    set_score(int(score))
+    yield(get_tree(), "idle_frame")
 
 func set_score(score) -> void:
   for child in get_children():
     child.queue_free()
   var scoreStr = str(score)
   var digits = []
-  print(scoreStr)
   for i in range(scoreStr.length()):
     digits.append(scoreStr[i].to_int())
   for digit in digits:

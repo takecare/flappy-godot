@@ -13,9 +13,11 @@ const sprites = [
   preload("res://sprites/number_middle_9.png")
 ]
 
-var LERP_DURATION = 3
+signal last_score_count_finished
 
+export(float) var lerpDuration = 1.5 # seconds
 export(NodePath) var animationPlayerPath = null
+
 onready var animationPlayer: AnimationPlayer = get_node(animationPlayerPath) if animationPlayerPath != null else get_node("../../AnimationPlayer")
 
 func _ready() -> void:
@@ -25,17 +27,14 @@ func _ready() -> void:
   # i can't figure out why connecting the signal doesn't work
   #var _result = animationPlayer.connect("animation_finished", self, "count_to_score")
 
-func teste() -> void:
-  print("teste yo")
-
 func count_to_score():
-  print("yo")
   var lerpTime = 0
-  while lerpTime < LERP_DURATION:
+  while lerpTime < lerpDuration:
     lerpTime += get_process_delta_time()  
-    var score = lerp(0, 100, lerpTime / LERP_DURATION)
+    var score = lerp(0, Game.score, lerpTime / lerpDuration)
     set_score(int(score))
     yield(get_tree(), "idle_frame")
+  emit_signal("last_score_count_finished")
 
 func set_score(score) -> void:
   for child in get_children():

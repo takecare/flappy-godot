@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://sprites/button_play_normal.png" type="Texture" id=1]
 [ext_resource path="res://sprites/button_score_normal.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://scripts/GameOverContainer.gd" type="Script" id=8]
 [ext_resource path="res://sprites/number_middle_0.png" type="Texture" id=9]
 [ext_resource path="res://scripts/LastScore.gd" type="Script" id=10]
+[ext_resource path="res://scripts/GameOverButtons.gd" type="Script" id=11]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Show"
@@ -125,12 +126,12 @@ __meta__ = {
 }
 
 [node name="Buttons" type="HBoxContainer" parent="."]
-visible = false
 margin_top = 108.0
 margin_right = 144.0
 margin_bottom = 137.0
 custom_constants/separation = 9
 alignment = 1
+script = ExtResource( 11 )
 
 [node name="Play" type="TextureButton" parent="Buttons"]
 margin_left = 15.0

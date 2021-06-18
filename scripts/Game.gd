@@ -9,7 +9,7 @@ const pipeGroup = "pipes"
 const groundGroup = "grounds"
 
 var score: int = 0 setget set_score
-var bestScore: int = 0 setget set_score
+var bestScore: int = 0 setget set_best_score
 
 func _ready() -> void:
     pass
@@ -24,6 +24,6 @@ func reset_score() -> void:
 func set_score(val) -> void:
     score = val
 
-func set_best_secore(val) -> void:
+func set_best_score(val) -> void:
     bestScore = val
     emit_signal("best_score_changed", bestScore)

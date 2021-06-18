@@ -13,12 +13,25 @@ const sprites = [
   preload("res://sprites/number_middle_9.png")
 ]
 
-func _ready() -> void:
-  var _result = Game.connect("score_changed", self, "_on_score_changed")
-  _on_score_changed(Game.score)
-  pass
+var lerpTime = 0
+var lerpDuration = 3
+var tempScore = 0
 
-func _on_score_changed(score) -> void:
+func _ready() -> void:
+  set_score(Game.score)
+  set_process(true)
+  pass
+  
+func _process(delta):
+  lerpTime += delta
+  if lerpTime > lerpDuration:
+    lerpTime = lerpDuration
+  var score = int(lerp(0, 100, lerpTime / lerpDuration))
+  if score != tempScore:
+    tempScore = score
+    set_score(score)
+
+func set_score(score) -> void:
   for child in get_children():
     child.queue_free()
   var scoreStr = str(score)

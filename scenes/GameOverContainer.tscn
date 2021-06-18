@@ -104,7 +104,7 @@ margin_left = 87.0
 margin_top = 16.0
 margin_right = 117.0
 margin_bottom = 26.0
-grow_horizontal = 2
+grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -116,8 +116,8 @@ __meta__ = {
 }
 
 [node name="Placeholder" type="TextureRect" parent="ScorePanelContainer/LastScore"]
-margin_left = 23.0
-margin_right = 30.0
+margin_left = 48.0
+margin_right = 55.0
 margin_bottom = 10.0
 texture = ExtResource( 9 )
 __meta__ = {

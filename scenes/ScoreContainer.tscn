@@ -6,6 +6,7 @@
 [node name="CurrentScoreContainer" type="HBoxContainer"]
 margin_right = 144.0
 margin_bottom = 22.0
+custom_constants/separation = 1
 alignment = 1
 script = ExtResource( 1 )
 __meta__ = {

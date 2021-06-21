@@ -95,8 +95,9 @@ alignment = 1
 [node name="GameOver" type="TextureRect" parent="GameOverContainer"]
 modulate = Color( 1, 1, 1, 0 )
 margin_left = 24.0
+margin_top = -5.0
 margin_right = 120.0
-margin_bottom = 21.0
+margin_bottom = 16.0
 texture = ExtResource( 6 )
 
 [node name="ScorePanelContainer" type="Control" parent="."]
@@ -143,7 +144,6 @@ __meta__ = {
 }
 
 [node name="Buttons" type="HBoxContainer" parent="."]
-modulate = Color( 1, 1, 1, 0 )
 margin_top = 108.0
 margin_right = 144.0
 margin_bottom = 137.0

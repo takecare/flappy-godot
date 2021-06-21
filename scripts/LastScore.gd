@@ -24,7 +24,7 @@ func _ready() -> void:
   set_score(Game.score)
   yield(animationPlayer, "animation_finished")
   count_to_score()
-  # i can't figure out why connecting the signal doesn't work
+  # i can't figure out why connecting the signal doesn't work so we're using yield
   #var _result = animationPlayer.connect("animation_finished", self, "count_to_score")
 
 func count_to_score():

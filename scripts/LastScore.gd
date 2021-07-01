@@ -16,8 +16,8 @@ const sprites = [
 signal last_score_count_finished
 
 export(float) var lerpDuration = 1.5 # seconds
-export(NodePath) var animationPlayerPath = null
 
+export(NodePath) var animationPlayerPath = null
 onready var animationPlayer: AnimationPlayer = get_node(animationPlayerPath) if animationPlayerPath != null else get_node("../../AnimationPlayer")
 
 func _ready() -> void:

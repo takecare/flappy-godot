@@ -1,5 +1,8 @@
 extends Container
 
+export(NodePath) var animationPlayerPath = null
+onready var animationPlayer: AnimationPlayer = get_node(animationPlayerPath) if animationPlayerPath != null else get_node("AnimationPlayer")
+
 func _ready() -> void:
   pass
 
@@ -9,6 +12,5 @@ func _on_bird_hit() -> void:
 func _on_bird_grounded() -> void:
   showWithDelay()
 
-# bug: this is being called again when the bird hits the ground after hitting a pipe
 func showWithDelay() -> void:
-  get_node("AnimationPlayer").play("Show")
+  animationPlayer.play("Show")

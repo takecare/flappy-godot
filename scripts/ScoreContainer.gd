@@ -28,3 +28,9 @@ func _on_score_changed(score) -> void:
     var texture = TextureRect.new()
     texture.set_texture(sprites[digit])
     add_child(texture)
+
+func _on_bird_hit() -> void:
+  hide()
+
+func _on_bird_grounded() -> void:
+  hide()

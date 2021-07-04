@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://sprites/button_play_normal.png" type="Texture" id=1]
 [ext_resource path="res://sprites/button_score_normal.png" type="Texture" id=2]
@@ -17,6 +17,8 @@
 [ext_resource path="res://animations/ShowGameOver.tres" type="Animation" id=15]
 [ext_resource path="res://animations/ShowGameOverButtons.tres" type="Animation" id=16]
 [ext_resource path="res://animations/FlashNew.tres" type="Animation" id=17]
+[ext_resource path="res://sprites/medal_bronze.png" type="Texture" id=18]
+[ext_resource path="res://scenes/Medal.gd" type="Script" id=19]
 
 [node name="GameOverContainer" type="Container"]
 margin_right = 144.0
@@ -124,6 +126,17 @@ __meta__ = {
 
 [node name="NewLabelAnimationPlayer" type="AnimationPlayer" parent="ScorePanelContainer"]
 anims/FlashNew = ExtResource( 17 )
+
+[node name="Medal" type="TextureRect" parent="ScorePanelContainer"]
+margin_left = 28.0
+margin_top = 22.0
+margin_right = 50.0
+margin_bottom = 44.0
+texture = ExtResource( 18 )
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Buttons" type="HBoxContainer" parent="."]
 margin_top = 108.0

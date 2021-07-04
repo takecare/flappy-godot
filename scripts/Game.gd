@@ -1,12 +1,20 @@
 extends Node
 
 signal score_changed
-signal best_score_changed(bestScore)
+signal best_score_changed(bestScore, medal)
 
 const birdGroup = "birdGroup"
 const skyGroup = "sky"
 const pipeGroup = "pipes"
 const groundGroup = "grounds"
+
+enum Medals {
+  NONE,
+  BRONZE = 10,
+  SILVER = 20,
+  GOLD = 30,
+  PLATINUM = 40
+}
 
 var score: int = 0 setget set_score
 var bestScore: int = 0 setget set_best_score
@@ -28,4 +36,13 @@ func set_score(val) -> void:
 
 func set_best_score(val) -> void:
   bestScore = val
-  emit_signal("best_score_changed", bestScore)
+  var medal = Medals.NONE
+  if bestScore >= Medals.PLATINUM:
+    medal = Medals.PLATINUM
+  elif bestScore >= Medals.GOLD:
+    medal = Medals.GOLD
+  elif bestScore >= Medals.SILVER:
+    medal = Medals.SILVER
+  elif bestScore >= Medals.BRONZE:
+    medal = Medals.BRONZE
+  emit_signal("best_score_changed", bestScore, medal)

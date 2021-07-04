@@ -20,11 +20,13 @@ func _on_bird_jumping() -> void:
   pass
 
 func _on_bird_hit() -> void:
-  bird.disconnect("bird_hit", gameOverContainer, "_on_bird_hit")
-  bird.disconnect("bird_grounded", gameOverContainer, "_on_bird_grounded")
-  pass
+  disconnect_signal(bird, "bird_hit", gameOverContainer, "_on_bird_hit")
+  disconnect_signal(bird, "bird_grounded", gameOverContainer, "_on_bird_grounded")
 
 func _on_bird_grounded() -> void:
-  bird.disconnect("bird_hit", gameOverContainer, "_on_bird_hit")
-  bird.disconnect("bird_grounded", gameOverContainer, "_on_bird_grounded")
-  pass
+  disconnect_signal(bird, "bird_hit", gameOverContainer, "_on_bird_hit")
+  disconnect_signal(bird, "bird_grounded", gameOverContainer, "_on_bird_grounded")
+
+func disconnect_signal(emitter, signalName, target, function) -> void:
+  if (emitter.has_signal(signalName)):
+    emitter.disconnect(signalName, target, function)

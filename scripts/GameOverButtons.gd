@@ -7,6 +7,7 @@ export(NodePath) var animationPlayerPath = null
 onready var animationPlayer: AnimationPlayer = get_node(animationPlayerPath) if animationPlayerPath != null else get_node("../AnimationPlayer")
 
 func _ready():
+  show()
   modulate = Color(1, 1, 1, 0)
   var _result = lastScore.connect("last_score_count_finished", self, "_fadeIn")
   _result = lastScore.connect("last_score_count_finished", self, "_focusPlayButton")

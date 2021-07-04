@@ -27,6 +27,6 @@ func _on_bird_grounded() -> void:
   disconnect_signal(bird, "bird_hit", gameOverContainer, "_on_bird_hit")
   disconnect_signal(bird, "bird_grounded", gameOverContainer, "_on_bird_grounded")
 
-func disconnect_signal(emitter, signalName, target, function) -> void:
-  if (emitter.has_signal(signalName)):
-    emitter.disconnect(signalName, target, function)
+func disconnect_signal(emitter, signalName, target, method) -> void:
+  if (emitter.is_connected(signalName, target, method)):
+    emitter.disconnect(signalName, target, method)

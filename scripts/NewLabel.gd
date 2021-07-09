@@ -6,4 +6,4 @@ func _ready():
 
 func _show(_bestScore, _medal):
   show()
-  $"../NewLabelAnimationPlayer".play("FlashNew")
+  $"NewLabelAnimationPlayer".play("FlashNew")

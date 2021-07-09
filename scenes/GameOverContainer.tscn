@@ -124,7 +124,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NewLabelAnimationPlayer" type="AnimationPlayer" parent="ScorePanelContainer"]
+[node name="NewLabelAnimationPlayer" type="AnimationPlayer" parent="ScorePanelContainer/NewLabel"]
 anims/FlashNew = ExtResource( 17 )
 
 [node name="Medal" type="TextureRect" parent="ScorePanelContainer"]

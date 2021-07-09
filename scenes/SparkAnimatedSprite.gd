@@ -19,7 +19,6 @@ func move_to_random_pos() -> void:
     newX = self.position.x + randi() % 2 * _randSign()
   while newY > yLimits[1] || newY < yLimits[0]:
     newY = self.position.y + randi() % 2 * _randSign()
-  print(str(newX) + " " + str(newY))
   position = Vector2(newX, newY)
 
 func _randSign() -> int:

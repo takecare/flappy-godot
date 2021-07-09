@@ -10,7 +10,7 @@ const groundGroup = "grounds"
 
 enum Medals {
   NONE,
-  BRONZE = 10,
+  BRONZE = 0,
   SILVER = 20,
   GOLD = 30,
   PLATINUM = 40

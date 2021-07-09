@@ -15,7 +15,6 @@ func _ready():
   _result = Game.connect("best_score_changed", self, "_on_best_score_changed")
   
 func _on_best_score_changed(_bestScore, medal) -> void:
-  print(medal)
   match medal:
     Game.Medals.PLATINUM:
       texture = SPRITE_PLATINUM

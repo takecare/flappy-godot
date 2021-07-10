@@ -139,6 +139,7 @@ __meta__ = {
 }
 
 [node name="Sparkles" parent="ScorePanelContainer/Medal" instance=ExtResource( 20 )]
+texturePath = NodePath("..")
 
 [node name="Buttons" type="HBoxContainer" parent="."]
 margin_top = 108.0

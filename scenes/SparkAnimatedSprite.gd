@@ -1,7 +1,10 @@
 extends AnimatedSprite
 
-onready var xLimits = [self.position.x - 3, self.position.x + 4]
-onready var yLimits = [self.position.y - 3, self.position.y + 4]
+# has to be assigned via the editor
+export(NodePath) var texturePath = null
+
+onready var textureRect: TextureRect = null if texturePath == null else get_node(texturePath)
+onready var textureSize = Vector2(0, 0) if textureRect == null else textureRect.texture.get_size()
 
 func _ready():
   hide()
@@ -13,13 +16,9 @@ func _show(_bestScore, _medal):
   $"SparkAnimationPlayer".play("Shine")
 
 func move_to_random_pos() -> void:
-  var newX = self.position.x + randi() % 2 * _randSign()
-  var newY = self.position.y + randi() % 2 * _randSign()
-  while newX > xLimits[1] || newX < xLimits[0]:
-    newX = self.position.x + randi() % 2 * _randSign()
-  while newY > yLimits[1] || newY < yLimits[0]:
-    newY = self.position.y + randi() % 2 * _randSign()
-  position = Vector2(newX, newY)
-
-func _randSign() -> int:
-  return 1 if randi() % 2 == 0 else -1
+  var radius = textureSize.x / 2
+  var randomAngle = deg2rad(rand_range(0, 360))
+  var randomRadius = rand_range(0, radius)
+  var x = randomRadius * cos(randomAngle)
+  var y = randomRadius * sin(randomAngle)
+  position = Vector2(x + radius, y + radius)

@@ -47,7 +47,6 @@ tracks/1/keys = {
 [node name="SparkAnimatedSprite" type="AnimatedSprite"]
 position = Vector2( 3, 3 )
 frames = SubResource( 1 )
-frame = 2
 script = ExtResource( 3 )
 
 [node name="SparkAnimationPlayer" type="AnimationPlayer" parent="."]

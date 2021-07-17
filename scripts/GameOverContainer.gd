@@ -3,7 +3,8 @@ extends Container
 export(NodePath) var animationPlayerPath = null
 onready var animationPlayer: AnimationPlayer = get_node(animationPlayerPath) if animationPlayerPath != null else get_node("AnimationPlayer")
 
-func _ready() -> void:  
+func _ready() -> void: 
+  showWithDelay() #debug
   pass
 
 func _on_bird_hit() -> void:

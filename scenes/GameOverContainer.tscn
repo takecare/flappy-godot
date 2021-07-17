@@ -129,9 +129,9 @@ anims/FlashNew = ExtResource( 17 )
 
 [node name="Medal" type="TextureRect" parent="ScorePanelContainer"]
 margin_left = 28.0
-margin_top = 22.0
+margin_top = 21.7734
 margin_right = 50.0
-margin_bottom = 44.0
+margin_bottom = 43.7734
 texture = ExtResource( 18 )
 script = ExtResource( 19 )
 __meta__ = {
@@ -140,6 +140,11 @@ __meta__ = {
 
 [node name="Sparkles" parent="ScorePanelContainer/Medal" instance=ExtResource( 20 )]
 texturePath = NodePath("..")
+
+[node name="SparkAnimatedSprite" parent="ScorePanelContainer/Medal" instance=ExtResource( 20 )]
+texturePath = NodePath("..")
+timeOffset = 0.2
+scaleOffset = 0.5
 
 [node name="Buttons" type="HBoxContainer" parent="."]
 margin_top = 108.0

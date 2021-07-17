@@ -11,6 +11,7 @@ onready var lastScore: HBoxContainer = get_node(lastScorePath) if lastScorePath 
 
 func _ready():
   hide()
+  show() #debug
   var _result = lastScore.connect("last_score_count_finished", self, "_on_last_score_counting_finished")
   _result = Game.connect("best_score_changed", self, "_on_best_score_changed")
   

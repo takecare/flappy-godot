@@ -8,9 +8,11 @@ const skyGroup = "sky"
 const pipeGroup = "pipes"
 const groundGroup = "grounds"
 
+var isDebug: bool = true
+
 enum Medals {
   NONE,
-  BRONZE = 0,
+  BRONZE = 10,
   SILVER = 20,
   GOLD = 30,
   PLATINUM = 40

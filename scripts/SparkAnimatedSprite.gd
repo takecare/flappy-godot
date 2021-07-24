@@ -5,24 +5,24 @@ class_name Sparkle
 # has to be assigned via the editor. needed to calculate where the sparkle can move to
 # it should be the medal texture
 export(NodePath) var texturePath = null
-export(float) var timeOffset = null
+export(float) var speed: float = 1.0
+export(float, 0, 0.8) var timeOffset = null
 export(float) var scaleOffset = null # scale = [step, 1.0 - scaleStep]
 
 onready var textureRect: TextureRect = null if texturePath == null else get_node(texturePath)
 onready var textureSize = Vector2(0, 0) if textureRect == null else textureRect.texture.get_size()
 
 onready var animationPlayer: AnimationPlayer = $"SparkAnimationPlayer"
-onready var shineAnimation = animationPlayer.get_animation("Shine")
-#var shineAnimation: Animation
 
 func _ready():
   hide()
-  _show(0,0) #debug
-  animationPlayer.remove_animation("Shine")
-  shineAnimation = create_animation()
-  var _result = animationPlayer.add_animation("Shine", shineAnimation)
   randomize()
+  animationPlayer.playback_speed = speed
+  var shineAnimation: Animation = create_animation()
+  var _result = animationPlayer.add_animation("Shine", shineAnimation)
   _result = Game.connect("best_score_changed", self, "_show")
+  if Game.isDebug:
+    _show(0,0)
 
 func create_animation() -> Animation:
   var animation = Animation.new()
@@ -53,17 +53,17 @@ func random_scale(baseValue: float = 1.0) -> Vector2:
     newScale = newScale + randomSign * scaleOffset
   return Vector2(newScale, newScale)
   
-func random_time() -> float:
+func random_time(animation: Animation) -> float:
   # new time must be less than shineAnimation.length
-  var moveTime = shineAnimation.length
+  var moveTime = animation.length
   if timeOffset != null:
-    var times = shineAnimation.length / timeOffset
+    var times = animation.length / timeOffset
     var random = ((randi() % int(times)) + 1) / float(10)
     moveTime = moveTime - random
   return moveTime
 
 func add_move_track(animation: Animation) -> void:
-  var moveTime = random_time()
+  var moveTime = random_time(animation)
   var moveMethodTrackIdx = animation.add_track(Animation.TYPE_METHOD)
   var scheduleMethodTrackIdx = animation.add_track(Animation.TYPE_METHOD)
   animation.track_set_path(moveMethodTrackIdx, "../" + name)
@@ -71,10 +71,9 @@ func add_move_track(animation: Animation) -> void:
   animation.track_insert_key(moveMethodTrackIdx, moveTime, {"method": "move_to_random_pos", "args": []})
   animation.track_insert_key(scheduleMethodTrackIdx, moveTime, {"method": "schedule_next_move", "args": [scheduleMethodTrackIdx]})
 
-func schedule_next_move(trackIdx: int) -> void:
-  shineAnimation.remove_track(trackIdx)
-  add_move_track(shineAnimation)
-  print("sched next move on " + str(self) + " for animation " + str(shineAnimation))
+func schedule_next_move(animation: Animation, trackIdx: int) -> void:
+  animation.remove_track(trackIdx)
+  add_move_track(animation)
 
 func move_to_random_pos() -> void:
   var radius = textureSize.x / 2
@@ -84,4 +83,3 @@ func move_to_random_pos() -> void:
   var y = randomRadius * sin(randomAngle)
   position = Vector2(x + radius, y + radius)
   scale = random_scale()
- 

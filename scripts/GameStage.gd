@@ -8,6 +8,9 @@ onready var bird: Bird = get_node(birdPath) if birdPath != null else get_node("B
 onready var currentScore: Control = get_node(currentScorePath) if currentScorePath != null else get_node("HUD/CurrentScoreContainer")
 onready var gameOverContainer: Control = get_node(gameOverContainerPath) if gameOverContainerPath != null else get_node("HUD/GameOverContainer")
 
+func _enter_tree() -> void:
+  Game.isDebug = false
+
 func _ready() -> void:
   var _result
   _result = bird.connect("bird_hit", gameOverContainer, "_on_bird_hit")

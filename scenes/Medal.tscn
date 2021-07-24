@@ -17,6 +17,8 @@ __meta__ = {
 texturePath = NodePath("..")
 
 [node name="Sparkle2" parent="." instance=ExtResource( 6 )]
+modulate = Color( 1, 1, 1, 0.470588 )
 texturePath = NodePath("..")
-timeOffset = 0.4
+speed = 0.6
+timeOffset = 0.8
 scaleOffset = 0.3

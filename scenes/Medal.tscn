@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/Medal.gd" type="Script" id=1]
+[ext_resource path="res://sprites/medal_bronze.png" type="Texture" id=2]
+[ext_resource path="res://scenes/Sparkle.tscn" type="PackedScene" id=6]
+
+[node name="Medal" type="TextureRect"]
+margin_right = 22.0
+margin_bottom = 22.0
+texture = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sparkle1" parent="." instance=ExtResource( 6 )]
+texturePath = NodePath("..")
+
+[node name="Sparkle2" parent="." instance=ExtResource( 6 )]
+texturePath = NodePath("..")
+timeOffset = 0.4
+scaleOffset = 0.3

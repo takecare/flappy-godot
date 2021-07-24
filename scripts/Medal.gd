@@ -1,5 +1,7 @@
 extends TextureRect
 
+class_name Medal
+
 const SPRITE_BRONZE = preload("res://sprites/medal_bronze.png")
 const SPRITE_SILVER = preload("res://sprites/medal_silver.png")
 const SPRITE_GOLD = preload("res://sprites/medal_gold.png")

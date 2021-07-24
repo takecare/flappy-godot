@@ -1,6 +1,9 @@
 extends AnimatedSprite
 
+class_name Sparkle
+
 # has to be assigned via the editor. needed to calculate where the sparkle can move to
+# it should be the medal texture
 export(NodePath) var texturePath = null
 export(float) var timeOffset = null
 export(float) var scaleOffset = null # scale = [step, 1.0 - scaleStep]
@@ -10,21 +13,37 @@ onready var textureSize = Vector2(0, 0) if textureRect == null else textureRect.
 
 onready var animationPlayer: AnimationPlayer = $"SparkAnimationPlayer"
 onready var shineAnimation = animationPlayer.get_animation("Shine")
+#var shineAnimation: Animation
 
 func _ready():
   hide()
-  randomize()
-  var _result = Game.connect("best_score_changed", self, "_show")
   _show(0,0) #debug
+  animationPlayer.remove_animation("Shine")
+  shineAnimation = create_animation()
+  var _result = animationPlayer.add_animation("Shine", shineAnimation)
+  randomize()
+  _result = Game.connect("best_score_changed", self, "_show")
+
+func create_animation() -> Animation:
+  var animation = Animation.new()
+  animation.length = 0.8
+  animation.loop = true
+  add_move_track(animation)
+  add_frame_track(animation)
+  return animation
+  
+func add_frame_track(animation: Animation) -> void:
+  var trackIdx = animation.add_track(Animation.TYPE_VALUE)
+  animation.track_set_interpolation_type(trackIdx, 0)
+  animation.track_set_path(trackIdx, "../" + name + ":frame")
+  animation.track_insert_key(trackIdx, 0.0, 0, 0.25)
+  animation.track_insert_key(trackIdx, 0.2, 1, 1.25)
+  animation.track_insert_key(trackIdx, 0.4, 2, 0.8)
+  animation.track_insert_key(trackIdx, 0.6, 1, 1.0)
 
 func _show(_bestScore, _medal):
   show()
-  # hook our "move to random pos" animation into the pre-existing shine animation
-  # p.s.: i've tried to create the frame animation via code as well but it doesn't
-  #  work as it skips some frames (check previous commits) so we're hooking into
-  # the animation created via editor
-  add_move_track()
-  $"SparkAnimationPlayer".play("Shine")
+  animationPlayer.play("Shine")
   
 func random_scale(baseValue: float = 1.0) -> Vector2:
   # always start from a base value otherwise we'll build up on previous values
@@ -43,16 +62,19 @@ func random_time() -> float:
     moveTime = moveTime - random
   return moveTime
 
-func add_move_track() -> void:
+func add_move_track(animation: Animation) -> void:
   var moveTime = random_time()
-  var methodTrackIdx = shineAnimation.add_track(Animation.TYPE_METHOD)
-  shineAnimation.track_set_path(methodTrackIdx, "../SparkAnimatedSprite")
-  shineAnimation.track_insert_key(methodTrackIdx, moveTime, {"method": "move_to_random_pos", "args": []})
-  shineAnimation.track_insert_key(methodTrackIdx, moveTime, {"method": "schedule_next_move", "args": [methodTrackIdx]})
+  var moveMethodTrackIdx = animation.add_track(Animation.TYPE_METHOD)
+  var scheduleMethodTrackIdx = animation.add_track(Animation.TYPE_METHOD)
+  animation.track_set_path(moveMethodTrackIdx, "../" + name)
+  animation.track_set_path(scheduleMethodTrackIdx, "../" + name)
+  animation.track_insert_key(moveMethodTrackIdx, moveTime, {"method": "move_to_random_pos", "args": []})
+  animation.track_insert_key(scheduleMethodTrackIdx, moveTime, {"method": "schedule_next_move", "args": [scheduleMethodTrackIdx]})
 
 func schedule_next_move(trackIdx: int) -> void:
   shineAnimation.remove_track(trackIdx)
-  add_move_track()
+  add_move_track(shineAnimation)
+  print("sched next move on " + str(self) + " for animation " + str(shineAnimation))
 
 func move_to_random_pos() -> void:
   var radius = textureSize.x / 2
@@ -62,3 +84,4 @@ func move_to_random_pos() -> void:
   var y = randomRadius * sin(randomAngle)
   position = Vector2(x + radius, y + radius)
   scale = random_scale()
+ 

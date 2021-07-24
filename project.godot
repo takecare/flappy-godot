@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/GroundSpawner.gd"
 }, {
+"base": "TextureRect",
+"class": "Medal",
+"language": "GDScript",
+"path": "res://scripts/Medal.gd"
+}, {
 "base": "Node2D",
 "class": "PipeSpawner",
 "language": "GDScript",
@@ -43,15 +48,22 @@ _global_script_classes=[ {
 "class": "SkyLimit",
 "language": "GDScript",
 "path": "res://scripts/Sky.gd"
+}, {
+"base": "AnimatedSprite",
+"class": "Sparkle",
+"language": "GDScript",
+"path": "res://scripts/SparkAnimatedSprite.gd"
 } ]
 _global_script_class_icons={
 "Bird": "res://sprites/bird_orange_0.png",
 "Checkpoint": "",
 "Ground": "res://sprites/ground_icon.png",
 "GroundSpawner": "res://sprites/ground_spawner_icon.png",
+"Medal": "",
 "PipeSpawner": "res://sprites/pipe_spawner_icon.png",
 "Pipes": "res://sprites/pipe_icon.png",
-"SkyLimit": "res://sprites/background_day.png"
+"SkyLimit": "res://sprites/background_day.png",
+"Sparkle": ""
 }
 
 [application]

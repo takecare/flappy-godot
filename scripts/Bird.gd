@@ -59,7 +59,7 @@ func set_state(state: int):
 
 func isFlying() -> bool:
   return currentState is JumpingState or currentState is FlyingState
-  
+
 func isHit() -> bool:
   return currentState is HitState or currentState is GroundState
 

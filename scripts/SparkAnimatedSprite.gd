@@ -20,9 +20,11 @@ func _ready():
   animationPlayer.playback_speed = speed
   var shineAnimation: Animation = create_animation()
   var _result = animationPlayer.add_animation("Shine", shineAnimation)
-  _result = Game.connect("best_score_changed", self, "_show")
   if Game.isDebug:
-    _show(0,0)
+    _show()
+
+func _on_medal_attributed() -> void:
+  _show()
 
 func create_animation() -> Animation:
   var animation = Animation.new()
@@ -31,7 +33,7 @@ func create_animation() -> Animation:
   add_move_track(animation)
   add_frame_track(animation)
   return animation
-  
+
 func add_frame_track(animation: Animation) -> void:
   var trackIdx = animation.add_track(Animation.TYPE_VALUE)
   animation.track_set_interpolation_type(trackIdx, 0)
@@ -41,10 +43,10 @@ func add_frame_track(animation: Animation) -> void:
   animation.track_insert_key(trackIdx, 0.4, 2, 0.8)
   animation.track_insert_key(trackIdx, 0.6, 1, 1.0)
 
-func _show(_bestScore, _medal):
+func _show():
   show()
   animationPlayer.play("Shine")
-  
+
 func random_scale(baseValue: float = 1.0) -> Vector2:
   # always start from a base value otherwise we'll build up on previous values
   var newScale = baseValue
@@ -52,7 +54,7 @@ func random_scale(baseValue: float = 1.0) -> Vector2:
     var randomSign = 1 if randi() % 2 == 0 else -1
     newScale = newScale + randomSign * scaleOffset
   return Vector2(newScale, newScale)
-  
+
 func random_time(animation: Animation) -> float:
   # new time must be less than shineAnimation.length
   var moveTime = animation.length

@@ -42,6 +42,7 @@ keep_pressed_outside = true
 [node name="CurrentScoreContainer" parent="HUD" instance=ExtResource( 7 )]
 margin_top = 10.0
 margin_bottom = 32.0
+mouse_default_cursor_shape = 8
 
 [node name="GameOverContainer" parent="HUD" instance=ExtResource( 9 )]
 visible = false

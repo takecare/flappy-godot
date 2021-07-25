@@ -153,7 +153,7 @@ class JumpingState extends BirdState:
   var jumpVelocity: float
 
   func _init(
-    bird: Bird = null,
+    bird = null, # if we define the type here (Bird) the onready var currentState will fail as "Bird" is not defined
     gravityScale: float = 0,
     linearVelocity: float = 0,
     angVel: float = 0,
@@ -197,6 +197,11 @@ class JumpingState extends BirdState:
   func handleInput(event: InputEvent) -> void:
     if event.is_action_pressed("jump"):
       jump()
+    if !(event is InputEventMouseButton) or !event.is_pressed() or event.is_echo():
+      return
+    match event.button_index:
+      1: #ButtonList.BUTTON_LEFT:
+        jump()
 
   func jump() -> void:
     bird.linear_velocity = Vector2(bird.get_linear_velocity().x, jumpVelocity)

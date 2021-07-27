@@ -8,13 +8,15 @@ onready var animationPlayer: AnimationPlayer = get_node(animationPlayerPath) if 
 
 func _ready():
   show()
-  modulate = Color(1, 1, 1, 0)
-  var _result = lastScore.connect("last_score_count_finished", self, "_fadeIn")
-  _result = lastScore.connect("last_score_count_finished", self, "_focusPlayButton")
+  set_opaque()
+  var _result = lastScore.connect("last_score_count_finished", self, "_fade_in")
+  _result = lastScore.connect("last_score_count_finished", self, "_focus_play_button")
 
-func _fadeIn():
+func set_opaque():
+  modulate = Color(1, 1, 1, 0)
+
+func _fade_in():
   animationPlayer.play("Show Buttons")
 
-func _focusPlayButton():
+func _focus_play_button():
   get_node("Play").grab_focus()
-  pass

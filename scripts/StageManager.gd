@@ -17,9 +17,9 @@ func _ready() -> void:
 
 func changeToGameStage() -> void:
   Game.reset_score()
-  changeStage("res://stages/GameStage.tscn")
+  change_stage("res://stages/GameStage.tscn")
 
-func changeStage(stageName: String) -> void:
+func change_stage(stageName: String) -> void:
   if (stageName.empty()):
     push_error("stageName cannot be empty!")
     return

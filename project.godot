@@ -78,6 +78,10 @@ Game="*res://scripts/Game.gd"
 Utils="*res://scripts/Utils.gd"
 StageManager="*res://scenes/StageManager.tscn"
 
+[debug]
+
+gdscript/completion/autocomplete_setters_and_getters=true
+
 [display]
 
 window/size/width=144
@@ -95,6 +99,10 @@ jump={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":70,"unicode":0,"echo":false,"script":null)
  ]
 }
+
+[physics]
+
+common/enable_object_picking=false
 
 [rendering]
 

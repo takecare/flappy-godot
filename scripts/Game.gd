@@ -1,5 +1,7 @@
 extends Node
 
+signal paused
+signal unpaused
 signal score_changed
 signal best_score_changed(bestScore, medal)
 
@@ -23,6 +25,14 @@ var bestScore: int = 0 setget set_best_score
 
 func _ready() -> void:
   pass
+
+func pause() -> void:
+  get_tree().paused = true
+  emit_signal("paused")
+
+func unpause() -> void:
+  get_tree().paused = false
+  emit_signal("unpaused")
 
 func increase_score() -> void:
   set_score(score + 1)

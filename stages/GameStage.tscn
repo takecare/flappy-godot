@@ -53,25 +53,32 @@ margin_top = 52.0
 margin_bottom = 189.0
 
 [node name="PauseContainer" type="Container" parent="HUD"]
+pause_mode = 2
 margin_right = 144.0
 margin_bottom = 256.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="CanvasModulate" type="CanvasModulate" parent="HUD/PauseContainer"]
+
 [node name="PauseButton" type="TextureButton" parent="HUD/PauseContainer"]
-margin_left = 10.1691
+margin_left = 10.0
 margin_top = 10.0
-margin_right = 23.1691
+margin_right = 23.0
 margin_bottom = 24.0
 texture_normal = ExtResource( 13 )
-texture_pressed = ExtResource( 12 )
 script = ExtResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CanvasModulate" type="CanvasModulate" parent="HUD/PauseContainer"]
+[node name="PlayButton" type="TextureButton" parent="HUD/PauseContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 23.0
+margin_bottom = 24.0
+texture_normal = ExtResource( 12 )
 
 [node name="StageManager" parent="." instance=ExtResource( 8 )]
 

@@ -27,12 +27,19 @@ func _ready() -> void:
   pass
 
 func pause() -> void:
+  # TODO cannot pause if game is not in play state
   get_tree().paused = true
   emit_signal("paused")
 
 func unpause() -> void:
   get_tree().paused = false
   emit_signal("unpaused")
+
+func is_paused() -> bool:
+  return get_tree().paused
+
+func toggle_pause() -> void:
+  get_tree().paused = !get_tree().paused
 
 func increase_score() -> void:
   set_score(score + 1)

@@ -21,6 +21,8 @@ func modulate() -> void:
   #  and calling set_color(modulated) on it
   for path in nodes:
     var node: CanvasModulate = get_node(path)
+    if node == null:
+      push_warning("Unexpected null node, path is " + path)
     node.set_color(modulated)
 
 func reset() -> void:

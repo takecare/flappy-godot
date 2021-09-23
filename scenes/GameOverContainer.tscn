@@ -105,7 +105,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NewLabel" type="TextureRect" parent="ScorePanelContainer"]
+[node name="NewScoreLabel" type="TextureRect" parent="ScorePanelContainer"]
 margin_left = 90.0
 margin_top = 30.0
 margin_right = 106.0
@@ -117,7 +117,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NewLabelAnimationPlayer" type="AnimationPlayer" parent="ScorePanelContainer/NewLabel"]
+[node name="NewLabelAnimationPlayer" type="AnimationPlayer" parent="ScorePanelContainer/NewScoreLabel"]
 anims/FlashNew = ExtResource( 17 )
 
 [node name="Medal" parent="ScorePanelContainer" instance=ExtResource( 18 )]

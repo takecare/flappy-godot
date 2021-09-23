@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/UnpauseButton.gd" type="Script" id=1]
+[ext_resource path="res://sprites/button_pause.png" type="Texture" id=2]
+[ext_resource path="res://sprites/button_resume.png" type="Texture" id=3]
+[ext_resource path="res://scripts/PauseButton.gd" type="Script" id=4]
+
+[node name="PauseContainer" type="Container"]
+pause_mode = 2
+margin_right = 13.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PauseButton" type="TextureButton" parent="."]
+margin_right = 13.0
+margin_bottom = 14.0
+texture_normal = ExtResource( 2 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UnpauseButton" type="TextureButton" parent="."]
+visible = false
+margin_right = 13.0
+margin_bottom = 14.0
+texture_normal = ExtResource( 3 )
+script = ExtResource( 1 )

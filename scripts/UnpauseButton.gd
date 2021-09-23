@@ -1,12 +1,12 @@
 extends TextureButton
 
 func _ready() -> void:
-  var _result = Game.connect("unpaused", self, "_on_unpaused")
+  var _result = Game.connect("paused", self, "_on_paused")
   _result = connect("pressed", self, "_on_pressed")
 
 func _on_pressed() -> void:
   visible = false
-  Game.pause()
+  Game.unpause()
 
-func _on_unpaused() -> void:
+func _on_paused() -> void:
   visible = true

@@ -1,5 +1,8 @@
 extends Node2D
 
+# This CanvasModulateManager is used to manage a series of CanvasModulate instances that are used to darken the scene when the game is paused
+# We need to coordinate more than one CanvasModulate instance because we're several CanvasLayer instances in the GameStage
+
 const NON_MODULATED = Color(1, 1, 1, 1)
 
 export(Color) var modulated = Color(1, 1, 1, 1)
